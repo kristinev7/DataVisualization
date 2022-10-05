@@ -79,31 +79,33 @@
 <script>
 $(document).ready(function() {
     $('#search').click(function(){
-        var id = $('#qbname').val();
-       
-        if(id != '')
-        
+        var stat = $('#qbname').val();      
+        if(stat != '')        
         {
-            console.log(id);
+            console.log(stat);
             $.ajax({
-                url:"fetchqb.php",
+                //url: window.location.href.split('?')[0] + 'fetchqb.php',
+                url: 'fetchqb.php',
                 type:"POST",
-                data:{qname:name},
-                dataType:"JSON",
-                success:function(data)
+                data:{stat:stat},
+                dataType:"text",
+                success:function(row)
                 {
+                    console.log(row);
                     $('#qbdetails').css("display", "block");
-                    $('#qb_team').text(data.team);
-                    $('#week').text(data.week);
-                    $('#qb_name').text(data.name);
-                    $('#passstyle').text(data.pass_style);
-                    $('#x').text(data.x);
-                    $('#y').text(data.y);
-                    $('#season').text(data.season);
-                    console.log(data);
+                    $('#qb_team').text(row.team);
+                    $('#week').text(row.week);
+                    $('#qb_name').text(row.name);
+                    $('#passstyle').text(row.pass_style);
+                    $('#x').text(row.x);
+                    $('#y').text(row.y);
+                    $('#season').text(row.season);
+                    
+                },
+                    error : function (xmlHttpRequest, textStatus, errorThrown) {
+                    alert("Error " + errorThrown);
                 }
-                
-            })
+            });
         } else {
             alert("Please select QB");
         }
