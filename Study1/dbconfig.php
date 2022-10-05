@@ -10,6 +10,6 @@
     //}
      $host = 'localhost';
 	 $username ='root';
-	 $dbpassword='';
+	 $dbpassword='Kv67SS1213';
      $dbname= 'test';
-?>
+?> 
