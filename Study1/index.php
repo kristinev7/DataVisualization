@@ -5,7 +5,7 @@
         die('Connection error: ' . mysqli_connect_errno());
     } else {
         echo "success\n";
-        $sql="SELECT distinct(name) FROM qbpasses";
+        $sql = "Show tables where tables_in_test not like '%qbpasses%'";
         $result = mysqli_query($mycon,$sql);
         //$q = $_GET['qbs'];
          //echo "q: " . $q;
@@ -29,7 +29,8 @@
                         <?php
                             while($row = mysqli_fetch_array($result))
                             {
-                                echo '<option value="'.$row["name"].'">'.$row["name"].'</option>';      
+                                //echo '<option value="'.$row["name"].'">'.$row["name"].'</option>'; 
+                                echo '<option value="'.$row[0].'">'.$row[0].'</option>';     
                             }
                         ?>
                     </select>
@@ -45,27 +46,7 @@
                     <tr>
                         <td width="10%" align="right">Team</td>
                         <td width="90%"><span id="qb_team"></span></td>
-                    </tr>
-                    <tr>
-                        <td width="10%" align="right">Week</td>
-                        <td width="90%"><span id="week"></span></td>
-                    </tr>
-                    <tr>
-                        <td width="10%" align="right">Name</td>
-                        <td width="90%"><span id="qb_name"></span></td>
-                    </tr>
-                    <tr>
-                        <td width="10%" align="right">Pass Type</td>
-                        <td width="90%"><span id="passstyle"></span></td>
-                    </tr>
-                    <tr>
-                        <td width="10%" align="right">X</td>
-                        <td width="90%"><span id="x"></span></td>
-                    </tr>
-                    <tr>
-                        <td width="10%" align="right">Y</td>
-                        <td width="90%"><span id="y"></span></td>
-                    </tr>
+                    </tr> 
                     <tr>
                         <td width="10%" align="right">Season</td>
                         <td width="90%"><span id="season"></span></td>
@@ -73,8 +54,85 @@
                 </table>
             </div>
         </div><!--container--> 
+        <div class = "chart_area">
+            <div id="chart" style="width: 1000px; height: 620px;"></div>
+        </div>
     </body>
 </html>
+
+<!-- bubble chart set-up using google charts-->
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+google.charts.load('current', {packages: ['corechart', 'bar']});
+google.charts.setOnLoadCallback();
+//get the data
+function loadData(stat) {
+    $.ajax({
+                url:'fetchqb.php',
+                type:"POST",
+                data:{stat:stat},
+                dataType:"json",
+                success:function(row)
+                {
+                    console.log(row);
+                    console.log(row[0]['team']);
+                    console.log(row[0]['season']);
+                    var t = row[0]['team'];
+                    var s = row[0]['season'];
+                    $('#qbdetails').css("display", "block");
+                    $('#qb_team').text(t);
+                    $('#season').text(s);
+                    drawChart(row);
+                },
+                    error : function (xmlHttpRequest, textStatus, errorThrown) {
+                    alert("Error " + errorThrown);
+                    //error thrown: Error SyntaxError: JSON.parse: unexpected character at line 1 column 2 of the JSON data
+                }
+            });
+    }//endofloaddatafunct
+
+//drawchart func.
+function drawChart(data) {
+    var jsonData = data;
+    var info = new google.visualization.DataTable();
+    info.addColumn('string', 'pass');
+    info.addColumn('number', 'x');
+    info.addColumn('number', 'y');
+    $.each(jsonData, function (i, jsonData) {
+        var ptype = jsonData.pass;
+        console.log(ptype);
+        var x = parseFloat($.trim(jsonData.x));
+        console.log(x);
+        var y = parseFloat($.trim(jsonData.y));
+        console.log(y);
+        info.addRows([[ptype, x, y]]);
+    });
+    var options = {
+        hAxis: {
+            title: "X"
+        },
+        vAxis: {
+            title: "Y"
+        },
+        bubble: {
+            textStyle: {
+                fontSize: 12,
+                fontName: 'Times-Roman',
+                color: 'green',
+                bold: true,
+                italic: true
+            }
+        },
+        backgroundColor: 'transparent',
+        chartArea:{backgroundColor:'green'}
+
+    };
+        var chart = new google.visualization.BubbleChart(document.getElementById('chart'));
+        chart.draw(info, options);
+}//endofdrawChart
+
+</script><!-- endofchartset-up -->
 
 <script>
 $(document).ready(function() {
@@ -83,32 +141,13 @@ $(document).ready(function() {
         if(stat != '')        
         {
             console.log(stat);
-            $.ajax({
-                //url: window.location.href.split('?')[0] + 'fetchqb.php',
-                url: 'fetchqb.php',
-                type:"POST",
-                data:{stat:stat},
-                dataType:"text",
-                success:function(row)
-                {
-                    console.log(row);
-                    $('#qbdetails').css("display", "block");
-                    $('#qb_team').text(row.team);
-                    $('#week').text(row.week);
-                    $('#qb_name').text(row.name);
-                    $('#passstyle').text(row.pass_style);
-                    $('#x').text(row.x);
-                    $('#y').text(row.y);
-                    $('#season').text(row.season);
-                    
-                },
-                    error : function (xmlHttpRequest, textStatus, errorThrown) {
-                    alert("Error " + errorThrown);
-                }
-            });
+            loadData(stat);
+            
         } else {
             alert("Please select QB");
         }
     });
 });
  </script>
+
+
