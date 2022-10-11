@@ -10,5 +10,7 @@ started: 8PM, Ended: 12:50AM\
 Goal for next session\
     -- continue bubble editing\
     -- edit chart area to reasonable size that looks like a football field
-
+10/10/22\
+-- radio button: week, season
+-- checkbox: pass, 
 
