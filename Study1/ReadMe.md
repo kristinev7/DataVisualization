@@ -9,8 +9,11 @@ started: 8PM, Ended: 12:50AM\
     -- started on bubble chart viewing and designing\
 Goal for next session\
     -- continue bubble editing\
-    -- edit chart area to reasonable size that looks like a football field
+    -- edit chart area to reasonable size that looks like a football field\
 10/10/22\
--- radio button: week, season
--- checkbox: pass, 
+-- run into some trouble with test1, create test2draft which works\
+-- radio button: week, pass works\
+-- need to adjust grid size and bubble size\
+
+ 
 
