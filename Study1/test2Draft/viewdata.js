@@ -53,10 +53,16 @@ function loadData(wk, pass) {
     });
     var options = {
         hAxis: {
-            title: "X"
+            title: "X",
+            gridlines: {color: '#333', minSpacing: 10, count: 53.3/2},
+            // scaleType: 'linear',
+            // ticks: [-53.3/2, 53.3/2, 0]
         },
         vAxis: {
-            title: "Y"
+            title: "Y",
+            // scaleType: 'linear',
+            ticks: [-10, 0, 10, 20, 30, 40, 50],
+            gridlines:{ minSpacing: 10, count:100}
         },
         bubble: {
             textStyle: {
