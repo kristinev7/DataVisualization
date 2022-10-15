@@ -5,7 +5,7 @@
         die('Connection error: ' . mysqli_connect_errno());
     } else {
         echo "success\n";
-        $sql = "Select distinct(week) from tb20";
+        $sql = "Select distinct(week) from tb20 order by week asc";
         $result = mysqli_query($mycon,$sql);
     }
 ?>
@@ -38,14 +38,14 @@
                             ?>
                         </select>
                         <p>Select a Pass Type:</p>
-                        <input type="radio" id="p" name="pass" value="interception">
-                        <label for="2017">interception</label><br>
-                        <input type="radio" id="p" name="pass" value="complete">
-                        <label for="2017">completion</label><br>
-                        <input type="radio" id="p" name="pass" value="incomplete">
-                        <label for="2017">incomplete</label><br>
-                        <input type="radio" id="p" name="pass" value="touchdown">
-                        <label for="2017">touchdown</label><br>                   
+                        <input type="checkbox" id="p1" name="pass" value="interception">
+                        <label for="p1">interception</label><br>
+                        <input type="checkbox" id="p2" name="pass" value="complete">
+                        <label for="p2">completion</label><br>
+                        <input type="checkbox" id="p3" name="pass" value="incomplete">
+                        <label for="p3">incomplete</label><br>
+                        <input type="checkbox" id="p4" name="pass" value="touchdown">
+                        <label for="p4">touchdown</label><br>   
                     </form>
                     <div>
                         <button type="button" name="search" id="search" class="btn btn-info">Search</button>
@@ -58,8 +58,4 @@
         </div>
     </body>
 </html>
-
-
-   
-
 

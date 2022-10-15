@@ -2,7 +2,7 @@
 
 if(isset($_POST["wk"]) || isset($_POST["pass"]))
 {
-    include '../dbconfig.php';
+    include '../../../CPS4745/dbconfig.php';
     $data = array();
     $week= $_POST["wk"];
     $p = $_POST["pass"];
