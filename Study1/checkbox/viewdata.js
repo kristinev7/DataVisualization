@@ -73,12 +73,15 @@ function drawChart(data) {
                 fontName: 'Times-Roman',
                 color: 'black',
                 bold: true,
-                italic: true
+                italic: true,
+                
             }
         },
         backgroundColor: 'transparent',
-        chartArea:{backgroundColor:'green'}
+        chartArea:{backgroundColor:'green'},
+        colorAxis: {colors: ['yellow', 'red']}
 
+        
     };
         var chart = new google.visualization.BubbleChart(document.getElementById('chart'));
         chart.draw(info, options);
