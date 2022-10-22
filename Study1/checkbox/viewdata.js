@@ -6,11 +6,12 @@ $(document).ready(function() {
             checkb.forEach((checkbox) => {
                    pass.push(checkbox.value);
            });
-                   pass = pass.toString();
+                   pass = pass.toString(); 
         var wk = $('#week').val();
-        jsonPass = JSON.stringify(pass);
+        var jsonPass = JSON.stringify(pass);
         if ((wk !== "") && (pass.length !== 0)) {
-           // console.log(wk);
+            console.log(wk);
+            console.log(jsonPass);
             loadData(wk, jsonPass);
         } else {
             alert("Please select pass and week type");
@@ -22,7 +23,7 @@ function loadData(wk, pass) {
     $.ajax({
                 url:'./fetchdata.php',
                 type:"POST",
-                data:{wk:wk, jsonPass:jsonPass},
+                data:{wk:wk, pass:pass},
                 dataType:"json",
                 success:function(data)
                 {
@@ -48,20 +49,26 @@ function drawChart(data) {
     info.addColumn('string', 'pass');
     info.addColumn('number', 'x');
     info.addColumn('number', 'y');
+    info.addColumn('string', 'color');
+    info.addColumn('number', 'size');
     $.each(jsonData, function (i, jsonData) {
         var ptype = jsonData.pass;
         console.log(ptype);
-        var x = parseFloat($.trim(jsonData.x));
+        var x = parseFloat(jsonData.x);  //parseFloat($.trim(jsonData.x));
         console.log(x);
-        var y = parseFloat($.trim(jsonData.y));
+        var y = parseFloat(jsonData.y); //parseFloat($.trim(jsonData.y));
         console.log(y);
-        info.addRows([[ptype, x, y]]);
+        var c = jsonData.color;
+        console.log(c);
+        var s = parseInt(jsonData.size);
+        console.log(c);
+        info.addRows([[ptype, x, y, c, s]]);
     });
     var options = {
         hAxis: {
             title: "X",
             gridlines: {color: '#333', minSpacing: 10, count: 53.3/2},
-        },
+        }, 
         vAxis: {
             title: "Y",
             ticks: [-10, 0, 10, 20, 30, 40, 50],
@@ -78,10 +85,8 @@ function drawChart(data) {
             }
         },
         backgroundColor: 'transparent',
-        chartArea:{backgroundColor:'green'},
-        colorAxis: {colors: ['yellow', 'red']}
+        chartArea:{backgroundColor:'green'}
 
-        
     };
         var chart = new google.visualization.BubbleChart(document.getElementById('chart'));
         chart.draw(info, options);

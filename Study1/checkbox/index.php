@@ -23,7 +23,7 @@
                     google.charts.setOnLoadCallback();</script>
     </head>
     <body>
-        <div class="container">
+        <div class="container"> 
             <div class="row">
                 <div>
                     <form>
@@ -48,7 +48,7 @@
                         <label for="p4">touchdown</label><br>   
                     </form>
                     <div>
-                        <button type="button" name="search" id="search" class="btn btn-info">Search</button>
+                        <button type="button" name="search" id="search">Search</button>
                     </div>
                 </div>
             </div>
