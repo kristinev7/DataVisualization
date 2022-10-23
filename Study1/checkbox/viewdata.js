@@ -31,7 +31,22 @@ function loadData(wk, pass) {
                     if(!$.trim(data)) {
                         alert("no " + pass + " made this week");
                     } else {
+                        // console.log(data[0]['season']);
+                        // console.log(data[0]['away_team']);
+                        // console.log(data[0]['team']);
+                        var team = data[0]['team'];
+                        var op_team = data[0]['away_team'];
+                        var season = data[0]['season'];
+                        if( team===op_team){
+                            op_team = data[0]['home_team'];
+                        }
+                        var winner= score(data[0]['away_score'], data[0]['home_score']);
+                        console.log(winner);
                         drawChart(data);
+                        $('#qbdetails').css("display", "block");
+                        $('#opp_team').text(op_team);
+                        $('#season').text(season);
+                        $('#result').text(winner);
                     }
                 },
                     error : function (xmlHttpRequest, textStatus, errorThrown) {
@@ -54,9 +69,9 @@ function drawChart(data) {
     $.each(jsonData, function (i, jsonData) {
         var ptype = jsonData.pass;
         console.log(ptype);
-        var x = parseFloat(jsonData.x);  //parseFloat($.trim(jsonData.x));
+        var x = parseFloat(jsonData.x);  
         console.log(x);
-        var y = parseFloat(jsonData.y); //parseFloat($.trim(jsonData.y));
+        var y = parseFloat(jsonData.y); 
         console.log(y);
         var c = jsonData.color;
         console.log(c);
@@ -93,3 +108,13 @@ function drawChart(data) {
         chart.draw(info, options);
 }//endofdrawChart
 
+//getgameresult
+function score(s1, s2){
+    if(s1==s2) {
+        return "TIE";
+    } if (s1<s2) {
+        return "Loser";
+    } else {
+        return "Winner";
+    }
+}
