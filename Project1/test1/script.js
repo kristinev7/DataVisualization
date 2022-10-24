@@ -4,8 +4,13 @@ $(document).ready(function () {
             var file = document.getElementById('csvFile').files[0];
             fileValidation();
         }
-            
+    });
+
+    $("#submit").click(function() {
+        var uid = $('#login').val();
+        console.log(uid);
     })
+    
 });
 
 function fileValidation() {
@@ -69,17 +74,6 @@ function buildTable (data) {
     myTable.appendChild(table);
 }
 
-function logIn() {
-   document.getElementById('myForm').style.display = "block";
-
-}
-
-function closeForm() {
-    documend.getElementById('myForm').style.display="none";
-}
-
-
-
 
 
 function giveInfo(){
@@ -105,8 +99,17 @@ function clientInfo() {
     alert(txt);
 }
 
+document.getElementById('logIn').addEventListener("click", function() {
+    document.querySelector('.bg-modal').style.display = "flex";
+});
 
-   
+document.querySelector('.close').addEventListener("click", function() {
+    document.querySelector('.bg-modal').style.display = "none";
+});
+
+document.getElementById('submit').addEventListener("click", function() {
+    $('.bg-modal').modal('toggle');
+});
 
 
 

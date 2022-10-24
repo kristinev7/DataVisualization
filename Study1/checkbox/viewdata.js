@@ -100,8 +100,10 @@ function drawChart(data) {
             }
         },
         backgroundColor: 'transparent',
-        chartArea:{backgroundColor:'green'}
-
+        chartArea:{backgroundColor:'green'},
+        colorAxis: {values: [1, 2, 3, 4], colors: ['blue', 'yellow', 'orange', 'red']},
+        legend: 'none',
+        sizeAxis:{maxSize:10,minSize:1}
     };
         var chart = new google.visualization.BubbleChart(document.getElementById('chart'));
         chart.draw(info, options);
