@@ -3,7 +3,7 @@ th, td {
     padding: 5px;
 }
 /* MODAL STARTS HERE */
-.bg-modal {
+.modal bd-example-modal-sm {
 	background-color: rgba(0, 0, 0, 0.8);
 	width: 100%;
 	height: 100%;
@@ -14,7 +14,7 @@ th, td {
 	align-items: center;
 }
 
-.modal-contents {
+.modal-content {
 	height: 300px;
 	width: 500px;
 	background-color: white;

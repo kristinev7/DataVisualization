@@ -3,14 +3,8 @@ $(document).ready(function () {
         function getData() {
             var file = document.getElementById('csvFile').files[0];
             fileValidation();
-        }
-    });
-
-    $("#submit").click(function() {
-        var uid = $('#login').val();
-        console.log(uid);
-    })
-    
+        }  
+    }); 
 });
 
 function fileValidation() {
@@ -98,19 +92,33 @@ function clientInfo() {
     let txt = `${b}`+"\n"+ `${version}` +"\n"+ `${jv}`+"\n"+ `${c}`;
     alert(txt);
 }
+function getLoginInfo() {
+    var uid = $('#uid').val();
+    var pw = $('#pw').val();
+    console.log(uid);
+    console.log(pw);
+    if (uid !== "" && pw !== ""){
+        connectUser(uid, pw);
+    }
+    
+}
 
-document.getElementById('logIn').addEventListener("click", function() {
-    document.querySelector('.bg-modal').style.display = "flex";
-});
+function connectUser(uid,pw) {
+    $.ajax({
+        url:'login.php',
+        type:'POST',
+        data:{uid:uid, pw:pw},
+        dataType:'json',
+        success:function(data)
+        {
 
-document.querySelector('.close').addEventListener("click", function() {
-    document.querySelector('.bg-modal').style.display = "none";
-});
-
-document.getElementById('submit').addEventListener("click", function() {
-    $('.bg-modal').modal('toggle');
-});
-
+        },
+            error : function (xmlHttpRequest, textStatus, errorThrown) 
+            {
+                alert("Error " + errorThrown);
+            }
+    });
+}
 
 
 

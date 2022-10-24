@@ -43,7 +43,7 @@
                             </li>
                             
                             <li>
-                                <a type="button" class="dropdown-item" id="logIn" data-toggle="modal" data-bs-target="#modal">Login to DB</a>
+                                <a type="button" class="dropdown-item" id="logIn" data-toggle="modal" data-target=".bd-example-modal-sm">Login to DB</a>
                             </li>
                             <li><a class="dropdown-item" id="logout">Logout DB</a></li>
                             <li><hr class="dropdown-divider"></li>
@@ -89,16 +89,39 @@
     </nav>
     
     <!--Modal Section-->
-    <div class ="bg-modal" id="modal">
-        <div class="modal-contents">
-            <div class="close">X</div>
+    <div class="modal bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="myModal" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+          <div class="modal-content">
             <form>
-                <input type="text" id="login" placeholder="User ID">
-			<input type="email" id="pw" placeholder="Password">
-			<a href="#" class="button" id="submit" data-bs-dismiss="modal">Submit</a>
+                <input type="text" id="uid" placeholder="User ID">
+                <input type="password" id="pw" placeholder="Password">
+                <button class="button" id="submit" data-bs-dismiss="modal" onclick="getLoginInfo()">Submit</button>
             </form>
+          </div>
         </div>
-    </div>
+      </div>
+
+
+
+
+
+
+
+
+
+
+    <!-- <div class ="bg-modal" id="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="close">X</div>
+                <form>
+                    <input type="text" id="login" placeholder="User ID">
+                <input type="password" id="pw" placeholder="Password">
+                <button class="button" id="submit" data-bs-dismiss="modal">Submit</button>
+                </form>
+            </div>
+        
+    </div> -->
     <!--End of Modal Section-->
 
     <section class="p-5 text-center">
