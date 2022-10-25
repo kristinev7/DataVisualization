@@ -4,8 +4,17 @@ $(document).ready(function () {
             var file = document.getElementById('csvFile').files[0];
             fileValidation();
         }  
-    }); 
-});
+    });
+    $('#submit').click (function (e) {
+        e.preventDefault();
+        $('.button').modal('hide');
+        var uid = $('#uid').val();
+        var pw = $('#pw').val();
+        connectUser(uid, pw);   
+        });
+    
+})
+
 
 function fileValidation() {
     var file = document.getElementById('csvFile');
@@ -39,7 +48,6 @@ function parseData(){
         });
     }
 
-
 function buildTable (data) {
     let myTable = document.querySelector('#table');
     var table = document.createElement('table');
@@ -68,8 +76,6 @@ function buildTable (data) {
     myTable.appendChild(table);
 }
 
-
-
 function giveInfo(){
     alert("Kristine Veneles, CPS4745, Project due Oct. 26, 2022");
 }
@@ -92,36 +98,61 @@ function clientInfo() {
     let txt = `${b}`+"\n"+ `${version}` +"\n"+ `${jv}`+"\n"+ `${c}`;
     alert(txt);
 }
-function getLoginInfo() {
-    var uid = $('#uid').val();
-    var pw = $('#pw').val();
-    console.log(uid);
-    console.log(pw);
-    if (uid !== "" && pw !== ""){
-        connectUser(uid, pw);
-    }
-    
-}
 
 function connectUser(uid,pw) {
     $.ajax({
         url:'login.php',
         type:'POST',
         data:{uid:uid, pw:pw},
-        dataType:'json',
-        success:function(data)
+        dataType:'text',
+        async:false,
+        success:function(response)
         {
+            console.log(response);
+            var msg = response;
+            console.log('hello');
 
+            $("#msgForUser").css("display", "block");
+            $("#messageArea").text(msg);
         },
             error : function (xmlHttpRequest, textStatus, errorThrown) 
             {
-                alert("Error " + errorThrown);
+                console.log(textStatus);
+                console.log("Error " + errorThrown);
+            }, 
+            fail : function( jqXHR, textStatus ) {
+                alert( "request failed: " + textStatus );
             }
-    });
+        });
+    };
+
+function userInfo() {
+    $.ajax({
+        url: 'getInfo.php',
+        type: 'GET',
+        dataType: 'json',
+        success:function(response)
+        {
+            console.log(response);
+            var uid = response[0]['uid'];
+            var login = response[0]['login'];
+            var name = response[0]['name'];
+            var gender = response[0]['gender'];
+            viewUserInfo(uid, login, name, gender);
+            
+        },
+        error : function (xmlHttpRequest, textStatus, errorThrown) 
+        {
+            console.log(textStatus);
+            console.log("Error " + errorThrown);
+        } 
+    })
 }
 
-
-
+function viewUserInfo(uid, login, name, gender) {
+    let info = uid + ", " + login + ", " + name + ", " + gender;
+    alert(info);
+}
 
 
 
