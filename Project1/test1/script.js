@@ -12,9 +12,14 @@ $(document).ready(function () {
         var pw = $('#pw').val();
         connectUser(uid, pw);   
         });
+
+        
+    $('#confirmLogout').click(function(e) {
+        e.preventDefault();
+        logout();
+    });
     
 })
-
 
 function fileValidation() {
     var file = document.getElementById('csvFile');
@@ -38,43 +43,14 @@ function parseData(){
             complete: function(res) {
                 //console.log(res.data);
                 var bbData=res.data;
-
                 console.log(bbData);
                 // console.log(bbData[0]);
                 // console.log(headers);
-                buildTable(bbData);
-
+                //buildTable(bbData);
+                
             }
         });
     }
-
-function buildTable (data) {
-    let myTable = document.querySelector('#table');
-    var table = document.createElement('table');
-    var headerRow = document.createElement('tr');
-    let headers = data[0];
-    console.log(headers);
-    headers.forEach(header => {
-        var header = document.createElement('th');
-        let dData = document.createTextNode(header);
-        header.appendChild(dData);
-        headerRow.appendChild(header);
-    });
-    
-    table.appendChild(headerRow);
-
-    data.forEach(txt => {
-        let row = document.createElement('tr');
-        Object.values(txt).forEach(val => {
-            let cell = document.createElement('td');
-            let dData = document.createTextNode(val);
-            cell.appendChild(dData);
-            row.appendChild(cell);
-        });
-        table.appendChild(row);
-    });
-    myTable.appendChild(table);
-}
 
 function giveInfo(){
     alert("Kristine Veneles, CPS4745, Project due Oct. 26, 2022");
@@ -129,7 +105,7 @@ function connectUser(uid,pw) {
 function userInfo() {
     $.ajax({
         url: 'getInfo.php',
-        type: 'GET',
+        type: 'POST',
         dataType: 'json',
         success:function(response)
         {
@@ -138,8 +114,12 @@ function userInfo() {
             var login = response[0]['login'];
             var name = response[0]['name'];
             var gender = response[0]['gender'];
-            viewUserInfo(uid, login, name, gender);
-            
+            if (uid == undefined || login==undefined || name == undefined || gender==undefined) {
+                var r = response;
+                alert(r);
+            } else {
+                viewUserInfo(uid, login, name, gender);
+            } 
         },
         error : function (xmlHttpRequest, textStatus, errorThrown) 
         {
@@ -154,10 +134,55 @@ function viewUserInfo(uid, login, name, gender) {
     alert(info);
 }
 
+function logout() {
+    $.ajax({
+        url: 'logout.php',
+        type: 'POST',
+        dataType: 'text',
+        success:function(response)
+        {
+            console.log(response);
+            var msg = response;
+            $("#msgForUser").css("display", "block");
+            $("#messageArea").text(msg);
+        }
+    })
+}
 
+function closeWindow() {
+    if (confirm("Close Window?")) {
+        window.open('','_parent','');
+        window.close();
+    }
+}
 
+function buildTable (data) {
+    let myTable = document.querySelector('#table');
+    var table = document.createElement('table');
+    var headerRow = document.createElement('tr');
+    let headers = data[0];
+    console.log(headers);
+    headers.forEach(header => {
+        var header = document.createElement('th');
+        let dData = document.createTextNode(header);
+        header.appendChild(dData);
+        headerRow.appendChild(header);
+    });
+    
+    table.appendChild(headerRow);
 
-
+    data.forEach(txt => {
+        let row = document.createElement('tr');
+        Object.values(txt).forEach(val => {
+            let cell = document.createElement('td');
+            let dData = document.createTextNode(val);
+            cell.appendChild(dData);
+            row.appendChild(cell);
+        });
+        table.appendChild(row);
+    });
+    myTable.appendChild(table);
+}
 
 
 

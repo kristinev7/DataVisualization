@@ -46,7 +46,8 @@ if(isset($_POST['uid']) && isset($_POST['pw'])) {
                 if( (strcmp($userId, $login) == 0) && (strcmp($userPw, $pw) == 0) ) {
                     $msg= "Successful login!";
                     //setcookie and session
-                    setcookie('userId', $userId, time() + 3600);
+                    // setcookie('userId', $userId, time() + 3600, );
+                    setcookie('userId', $userId, ['secure'=>true, 'samesite' =>'Lax', 'expires' => time() + 3600,] );
                     $_SESSION['userN'] = $login;
                     $_SESSION['userPw']=$pw;
                 }
