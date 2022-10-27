@@ -43,8 +43,10 @@ function parseData() {
             skipEmptyLines: true,
             complete: function(res) {
 
-                //console.log(res.data);
+                console.log(res.data);
                 //Object.keys(obj.shareInfo[0]).length;
+                //var array = res.data[0];
+                //var distances = array['']
                 console.log(Object.keys(res.data).length);
                 //console.log(res.data);
                 //var bbData=res.data;
