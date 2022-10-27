@@ -2,8 +2,6 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <!-- <meta http-equiv="X-UA-Compatible"> -->
-    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <!--modal-->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
@@ -17,9 +15,9 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="style.css"> 
     <script type="text/javascript"> 
-        google.charts.load('current', {'packages':['corechart']});
+        google.charts.load('current', {'packages':['table']});
         google.charts.setOnLoadCallback();</script>
-   
+   <script src="script.js"></script>
     <title>HomeRun Data</title>
 </head>
 <body>
@@ -127,13 +125,11 @@
     </div> 
     <!--End of Modal Logout Section-->
 
-
-
     <section class="p-5 text-center">
         <div class="container text-center" style="display: inline-block">
             <div class="row align-items-start">
 
-                <div class="col-4" id="dataMessageArea">
+                <div class="col-6" id="dataMessageArea">
                     <div class="col bg-dark text-white p-2">
                         <p>Please select one choice and choose a graph in the View Menu:</p>
                             <input type="radio" id="avgPasses" name="data" value="avgPass"/>
@@ -149,25 +145,20 @@
                         <p><span id="messageArea"></span> </p>
                     </div>
                 </div>
-
-                <div class="col-6 text-bg-secondary p-2" id="tableArea">
+                <div class="col-6 text-bg-danger p-2" id="graphArea">
+                    graph area
+                </div>
+                <div class="col-6 text-bg-secondary p-4 text-dark">
                     table area
-                    <div class="table-responsive" id="csvData">
-                        <div id="table" style = "display:block; margin-top:40px">
-                        </div>
+                    <div class="chart_area" id="csvData">
+                        <div id="chart" style = "height:500px; width:100%; display:block;"></div>
                     </div>
                 </div>
 
-                <div class="col-9 text-bg-danger p-4" id="graphArea">
-                    graph area
-                </div>
+                
             </div><!--d-flex-->
         </div><!--container-->
     </section>
-    <section>
-
-    </section>
-    
     <script src="script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
     

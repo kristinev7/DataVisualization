@@ -11,16 +11,14 @@ $(document).ready(function () {
         var uid = $('#uid').val();
         var pw = $('#pw').val();
         connectUser(uid, pw);   
-        });
-
-        
+    });
     $('#confirmLogout').click(function(e) {
         e.preventDefault();
         logout();
     });
-    
 })
 
+//VERIFY UPLOAD DATA IS A CSV
 function fileValidation() {
     var file = document.getElementById('csvFile');
     var filePath = file.value;
@@ -31,31 +29,40 @@ function fileValidation() {
         return false;
     } else {
         parseData();
+        //var data = document.getElementById('csvFile').files[0];
+        //drawTable(data);
     }
 };
 
-function parseData(){
+//PARSE CSV FILE FOR TABLEVIEW AND GRAPH VIEW
+function parseData() {
     Papa.parse(document.getElementById('csvFile').files[0],
         {
             download: true,
             header: false,
             skipEmptyLines: true,
             complete: function(res) {
+
                 //console.log(res.data);
-                var bbData=res.data;
-                console.log(bbData);
+                //Object.keys(obj.shareInfo[0]).length;
+                console.log(Object.keys(res.data).length);
+                //console.log(res.data);
+                //var bbData=res.data;
+                //console.log(bbData);
                 // console.log(bbData[0]);
                 // console.log(headers);
                 //buildTable(bbData);
-                
+                drawTable(res.data);
             }
         });
-    }
+}
 
+//INFO FUNCTION
 function giveInfo(){
     alert("Kristine Veneles, CPS4745, Project due Oct. 26, 2022");
 }
 
+//CLIENT INFO
 function clientInfo() {
     let c = "";
     let jv="";
@@ -75,6 +82,7 @@ function clientInfo() {
     alert(txt);
 }
 
+//LOGIN FUNCTION
 function connectUser(uid,pw) {
     $.ajax({
         url:'login.php',
@@ -100,8 +108,9 @@ function connectUser(uid,pw) {
                 alert( "request failed: " + textStatus );
             }
         });
-    };
+};
 
+//GET USER INFO
 function userInfo() {
     $.ajax({
         url: 'getInfo.php',
@@ -129,11 +138,13 @@ function userInfo() {
     })
 }
 
+//User Info
 function viewUserInfo(uid, login, name, gender) {
     let info = uid + ", " + login + ", " + name + ", " + gender;
     alert(info);
 }
 
+// LOGOUT FUNCTION
 function logout() {
     $.ajax({
         url: 'logout.php',
@@ -149,6 +160,7 @@ function logout() {
     })
 }
 
+// EXIT_FUNCTION --DOESNOTWORK
 function closeWindow() {
     if (confirm("Close Window?")) {
         window.open('','_parent','');
@@ -182,6 +194,20 @@ function buildTable (data) {
         table.appendChild(row);
     });
     myTable.appendChild(table);
+}
+//TABLE
+function drawTable(csvData) {
+    var data = new google.visualization.arrayToDataTable(csvData);
+    var options = {
+        width: '1000px',
+    };
+    //getValue(rowIndex, columnIndex
+    //console.log(data.getValue(0, 0));
+    //console.log(data.getValue(0, 1));
+    var table = new google.visualization.Table(document.getElementById('chart'));
+
+    table.draw(data, {showRowNumber: true, width: '100%', height: '100%'});
+    
 }
 
 
