@@ -1,5 +1,5 @@
 <?php
-session_start();
+// session_start();
 // $myfile = fopen("testfile.txt", "a+") or die("unable");
 // fwrite($myfile, "attempted login.\n");
 // fwrite($myfile, "user: " . $_POST['uid'] . " pass: " . $_POST['pw'] . "\n");
@@ -48,8 +48,8 @@ if(isset($_POST['uid']) && isset($_POST['pw'])) {
                     //setcookie and session
                     // setcookie('userId', $userId, time() + 3600, );
                     setcookie('userId', $userId, ['secure'=>true, 'samesite' =>'Lax', 'expires' => time() + 3600,] );
-                    $_SESSION['userN'] = $login;
-                    $_SESSION['userPw']=$pw;
+                    // $_SESSION['userN'] = $login;
+                    // $_SESSION['userPw']=$pw;
                 }
                 header('Content-Type: application/json');
                 echo json_encode($msg);

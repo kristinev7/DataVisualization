@@ -1,5 +1,5 @@
 <?php
-session_start();
+// session_start();
 $msg="";
 if (!isset($_COOKIE['userId'])) {
     $msg = "Please log in first";
@@ -14,5 +14,5 @@ if (!isset($_COOKIE['userId'])) {
         header('Content-Type: application/json');
         echo json_encode($msg);	
      }
-    session_destroy();
+    // session_destroy();
 ?>
