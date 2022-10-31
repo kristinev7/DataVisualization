@@ -1,3 +1,5 @@
+var bbData;
+var dataLength;
 $(document).ready(function () {
     document.getElementById('upload').addEventListener('click', () => {
         function getData() {
@@ -5,6 +7,7 @@ $(document).ready(function () {
             fileValidation();
         }  
     });
+
     $('#submit').click (function (e) {
         e.preventDefault();
         $('.button').modal('hide');
@@ -12,6 +15,7 @@ $(document).ready(function () {
         var pw = $('#pw').val();
         connectUser(uid, pw);   
     });
+
     $('#confirmLogout').click(function(e) {
         e.preventDefault();
         logout();
@@ -39,22 +43,16 @@ function parseData() {
     Papa.parse(document.getElementById('csvFile').files[0],
         {
             download: true,
-            header: false,
+            header: true,
             skipEmptyLines: true,
             complete: function(res) {
-
-                console.log(res.data);
-                //Object.keys(obj.shareInfo[0]).length;
-                //var array = res.data[0];
-                //var distances = array['']
-                console.log(Object.keys(res.data).length);
                 //console.log(res.data);
-                //var bbData=res.data;
-                //console.log(bbData);
-                // console.log(bbData[0]);
-                // console.log(headers);
-                //buildTable(bbData);
-                drawTable(res.data);
+                dataLength=Object.keys(res.data).length;
+                //console.log(Object.keys(res.data).length);
+                console.log(dataLength);
+                bbData=res.data;
+                $('#messageArea').text("Length of Data: " + `${dataLength}`);
+                drawTable(bbData);
             }
         });
 }
@@ -170,35 +168,9 @@ function closeWindow() {
     }
 }
 
-function buildTable (data) {
-    let myTable = document.querySelector('#table');
-    var table = document.createElement('table');
-    var headerRow = document.createElement('tr');
-    let headers = data[0];
-    console.log(headers);
-    headers.forEach(header => {
-        var header = document.createElement('th');
-        let dData = document.createTextNode(header);
-        header.appendChild(dData);
-        headerRow.appendChild(header);
-    });
-    
-    table.appendChild(headerRow);
-
-    data.forEach(txt => {
-        let row = document.createElement('tr');
-        Object.values(txt).forEach(val => {
-            let cell = document.createElement('td');
-            let dData = document.createTextNode(val);
-            cell.appendChild(dData);
-            row.appendChild(cell);
-        });
-        table.appendChild(row);
-    });
-    myTable.appendChild(table);
-}
 //TABLE
 function drawTable(csvData) {
+    //var d = csvData
     var data = new google.visualization.arrayToDataTable(csvData);
     var options = {
         width: '1000px',
@@ -212,7 +184,72 @@ function drawTable(csvData) {
     
 }
 
+//Line
+function drawLine(graphD) {
+    var graphD = $('#dataToGraph:checked').val();
+   // console.log(bbData);
+   // console.log(checkData(bbData));
+    if (checkData(bbData) === 'true') {
+        if ( (graphD === 'avgDist') || (graphD == 'estEV')) {
+           // console.log('draw Graph');
+           // console.log(bbData);
+           // $('#graphArea').text('draw graph here');
+            lineGraph(bbData);
+            $('#messageArea').text("Length of Data: " + `${dataLength}`);
+        } else {
+            var notice = "Please choose pie or bar graph."
+            $('#graphArea').text(notice);
+            $('#messageArea').text(notice);
+        }
+    } else {
+        $('#messageArea').text("Please load data.")
+        $('#graphArea').text("Please load data.")
+    }
+    
+}
+//check if bbData is empty
+function checkData(data) {
+    return(data ? 'true': 'false');
+}
+//line graph
+function lineGraph(ddata){
+    var d = ddata;
+    console.log(d);
+    //var d = new google.visualization.arrayToDataTable(csvData);
+    var data = new google.visualization.DataTable();
+    data.addColumn('string', 'Ballpark');
+    data.addColumn('number',  'Distance');
+    $.each(d, function(i, d) {
+        var park = d.Ballpark;
+        console.log(park);
+        var distance = parseInt(d.Distance);
+        console.log(distance);
+        data.addRows([[park, distance]]);
+    });
 
+    var newData = google.visualization.data.group(data, [{
+        column: 0,
+        label: 'Ballpark',
+        type:'string'  
+    }], [{
+        column: 1,
+        label: 'Avg Distance',
+        aggregation: google.visualization.data.avg,
+        type: 'number'
+    }]);
+    var options = {
+        width: 1000,
+        height: 500,
+        axes: {
+            x: {
+                0: {side: 'top'}
+            }
+        }
+    };
+    // var table = new google.visualization.LineChart(document.getElementById('chart_div'));
+    var table = new google.charts.Line(document.getElementById('displayGraph'));
+    table.draw(newData, google.charts.Line.convertOptions(options));
+}
 
 
 

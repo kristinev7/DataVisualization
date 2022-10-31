@@ -15,7 +15,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="style.css"> 
     <script type="text/javascript"> 
-        google.charts.load('current', {'packages':['table']});
+        google.charts.load('current', {'packages':['corechart', 'table', 'line']});
         google.charts.setOnLoadCallback();</script>
    <script src="script.js"></script>
     <title>HomeRun Data</title>
@@ -62,10 +62,10 @@
                             View
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Line</a></li>
-                            <li><a class="dropdown-item" href="#">Pie</a></li>
-                            <li><a class="dropdown-item" href="#">Bar</a></li>
-                            <li><a class="dropdown-item" href="#">Map</a></li>
+                            <li><a type='button' class="dropdown-item" id="line" onclick="drawLine()">Line</a></li>
+                            <li><a type='button' class="dropdown-item" id="pie" href="#">Pie</a></li>
+                            <li><a type='button' class="dropdown-item" id="bar" href="#">Bar</a></li>
+                            <li><a type='button' class="dropdown-item" id="map" href="#">Map</a></li>
                           </ul>
                     </li>
 
@@ -130,11 +130,11 @@
                 <div class="col-6" id="dataMessageArea">
                     <div class="col bg-dark text-white p-2">
                         <p>Please select one choice and choose a graph in the View Menu:</p>
-                            <input type="radio" id="avgPasses" name="data" value="avgPass"/>
+                            <input type="radio" id="dataToGraph" name="data" value="avgDist"/>
                             <label>Average Distance</label><br>
-                            <input type="radio" id="estWins" name="data" value="estWins"/>
-                            <label>Average Home Runs Against A Team</label><br>
-                            <input type="radio" id="oppTeam" name="data" value="oppTeam"/>
+                            <input type="radio" id="dataToGraph" name="data" value="estEV"/>
+                            <label>Estimated Exit_Velocity</label><br>
+                            <input type="radio" id="dataToGraph" name="data" value="homeR"/>
                             <label>Parks With Most Home Runs</label>
                     </div>
                     <div class="col bg-success text-white p-3" id="msgForUser"> 
@@ -144,7 +144,10 @@
                     </div>
                 </div>
                 <div class="col-6 text-bg-danger p-2" id="graphArea">
-                    graph area
+                    Graph Area
+                    <div>
+                        <div id="displayGraph" style = "height:500px; width:100%; display:block;"></div>
+                    </div>
                 </div>
                 <div class="col-6 text-bg-secondary p-4 text-dark">
                     table area

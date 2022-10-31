@@ -24,7 +24,7 @@
     </head>
     <body>
         <div class="container">
-            <div class="row">
+            <div class="row"> 
                 <div>
                     <form>
                         <label for="week">Choose a week:</label>
