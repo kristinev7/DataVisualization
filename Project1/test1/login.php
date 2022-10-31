@@ -1,5 +1,5 @@
 <?php
-session_start();
+// session_start();
 // $myfile = fopen("testfile.txt", "a+") or die("unable");
 // fwrite($myfile, "attempted login.\n");
 // fwrite($myfile, "user: " . $_POST['uid'] . " pass: " . $_POST['pw'] . "\n");

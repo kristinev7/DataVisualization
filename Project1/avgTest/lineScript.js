@@ -5,7 +5,7 @@ $(document).ready(function () {
 })
 
 function parseData() {
-    Papa.parse(document.getElementById('csvFile').files[0],
+    Papa.parse(document.getElementById('csvFile').files[0], 
     {
         download: true,
         header: true,
