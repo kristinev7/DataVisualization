@@ -15,7 +15,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="style.css"> 
     <script type="text/javascript"> 
-        google.charts.load('current', {'packages':['corechart', 'table', 'line']});
+        google.charts.load('current', {'packages':['corechart', 'table', 'line', 'bar', 'pie']});
         google.charts.setOnLoadCallback();</script>
    <script src="script.js"></script>
     <title>HomeRun Data</title>
@@ -62,13 +62,12 @@
                             View
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a type='button' class="dropdown-item" id="line" onclick="drawLine()">Line</a></li>
-                            <li><a type='button' class="dropdown-item" id="pie" href="#">Pie</a></li>
-                            <li><a type='button' class="dropdown-item" id="bar" href="#">Bar</a></li>
-                            <li><a type='button' class="dropdown-item" id="map" href="#">Map</a></li>
+                            <li><a type='button' class="dropdown-item" id="line">Line</a></li>
+                            <li><a type='button' class="dropdown-item" id="bar" >Bar</a></li>
+                            <li><a type='button' class="dropdown-item" id="pie" >Pie</a></li>
+                            <li><a type='button' class="dropdown-item" id="map" >Map</a></li>
                           </ul>
                     </li>
-
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Setting
@@ -87,6 +86,7 @@
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" onclick="giveInfo()">Info</a></li>
                             <li><a class="dropdown-item" onclick="clientInfo()">Client</a></li>
+                            <li><a class="dropdown-item" href="https://docs.google.com/document/d/e/2PACX-1vSkrqbeAS_Ykho8GRxyEvK4dY_qSXC6EMHuD_BVfiooheG8Ru8yXZ-TEjTVtySotw/pub">User Manual</a></li>
                           </ul>
                     </li>
                 </ul>
@@ -127,42 +127,57 @@
         <div class="container text-center" style="display: inline-block">
             <div class="row align-items-start">
 
-                <div class="col-6" id="dataMessageArea">
-                    <div class="col bg-dark text-white p-2">
+                <div class="col-3" id="dataMessageArea">
+                    <div class="col bg-dark text-white p-4">
                         <p>Please select one choice and choose a graph in the View Menu:</p>
-                            <input type="radio" id="dataToGraph" name="data" value="avgDist"/>
-                            <label>Average Distance</label><br>
+                            <input type="radio" id="dataToGraph" name="data" value="avgDist" checked/>
+                            <label>Average Distance [Bar, Line]</label><br>
                             <input type="radio" id="dataToGraph" name="data" value="estEV"/>
-                            <label>Estimated Exit_Velocity</label><br>
+                            <label>Estimated Exit_Velocity [Bar, Line]</label><br>
                             <input type="radio" id="dataToGraph" name="data" value="homeR"/>
-                            <label>Parks With Most Home Runs</label>
+                            <label>Parks With Most Home Runs [Bar, Pie]</label>
                     </div>
-                    <div class="col bg-success text-white p-3" id="msgForUser"> 
+                    <div class="col bg-success text-dark fw-bold p-4 pb-5" id="msgForUser"> 
                         message area
                         <br>
                         <p><span id="messageArea"></span> </p>
                     </div>
                 </div>
-                <div class="col-6 text-bg-danger p-2" id="graphArea">
-                    Graph Area
-                    <div>
-                        <div id="displayGraph" style = "height:500px; width:100%; display:block;"></div>
+                <div class="col-9 text-bg-secondary p-4 pb-5 text-dark">
+                    Table area
+                    <div class="chart_area pb-2" id="csvData">
+                        <div id="chart" style = "height:340px; width:100%; display:block;"></div>
                     </div>
                 </div>
-                <div class="col-6 text-bg-secondary p-4 text-dark">
-                    table area
-                    <div class="chart_area" id="csvData">
-                        <div id="chart" style = "height:500px; width:100%; display:block;"></div>
-                    </div>
-                </div>
-
-                
             </div><!--d-flex-->
         </div><!--container-->
     </section>
+    </section class="p-2 text-center">
+        <div class="container text-center" >
+            <div class="row align-items-start" id="graphArea">
+                <div class="text-bg-danger p-3 m-2 mt-0">
+                    Graph Area
+                    <div id="displayGraph" style = "height:500px; width:100%; display:block;"></div>
+                </div>
+            </div>
+        </div>
+        
+    <section>
+
+   
+               
+                
+                
+
+                
+    
     <script src="script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
     
 </body>
 </html>
 <!-- https://www.jsdelivr.com/package/npm/papaparse -->
+  <!-- onclick="drawLine()"
+    onclick="drawBar()"
+    onclick="drawPie()"
+    onclick="drawMap()" -->

@@ -38,6 +38,7 @@ function loadData(wk, pass) {
     //drawchart func.
     function drawChart(data) {
     var jsonData = data;
+    console.log(jsonData);
     var info = new google.visualization.DataTable();
     info.addColumn('string', 'pass');
     info.addColumn('number', 'x');
