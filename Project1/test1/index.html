@@ -74,7 +74,7 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a type="button" class="dropdown-item" id="userInfo" onclick="userInfo()">User Info</a>
+                                <a type="button" class="dropdown-item" id="userInfo" onclick="userInfo();">User Info</a>
                             </li>
                         </ul>
                     </li>
@@ -84,15 +84,23 @@
                             Help
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" onclick="giveInfo()">Info</a></li>
-                            <li><a class="dropdown-item" onclick="clientInfo()">Client</a></li>
-                            <li><a class="dropdown-item" href="https://docs.google.com/document/d/e/2PACX-1vSkrqbeAS_Ykho8GRxyEvK4dY_qSXC6EMHuD_BVfiooheG8Ru8yXZ-TEjTVtySotw/pub">User Manual</a></li>
+                            <li><a class="dropdown-item" onclick="giveInfo();">Info</a></li>
+                            <li><a class="dropdown-item" onclick="clientInfo();">Client</a></li>
+                            <li><a type = 'button' class="dropdown-item" onclick="displayInfo();">Project Information</a></li>
                           </ul>
                     </li>
                 </ul>
             </div>
         </div>     
     </nav>
+    <!-- iframe document -->
+    <div class="p-5 text-center" id="info">
+        Project Information
+        <div id="iframe">
+            <iframe src="https://docs.google.com/document/d/e/2PACX-1vSkrqbeAS_Ykho8GRxyEvK4dY_qSXC6EMHuD_BVfiooheG8Ru8yXZ-TEjTVtySotw/pub?embedded=true"  height="500" width="1000" ></iframe>
+            <button id='exit'>Exit</button>
+        </div>
+    </div>
     
     <!--Modal Login Section-->
     <div class="modal bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="myModal" aria-hidden="true">

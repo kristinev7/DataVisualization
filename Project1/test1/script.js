@@ -1,6 +1,10 @@
 var dataforGraph;
 var dataLength;
 $(document).ready(function () {
+    window.onload = function() {
+        var iframe = document.getElementById('info');
+        iframe.style.display = 'none';
+    }
     document.getElementById('upload').addEventListener('click', () => {
         fileValidation(); 
     });
@@ -27,8 +31,21 @@ $(document).ready(function () {
         e.preventDefault();
         drawPie();
     });
+    $('#exit').click(function(e) {
+        e.preventDefault();
+        hideInfo();
+    })
 })
-
+//show info in an iframe
+function displayInfo() {
+        var iframe = document.getElementById('info');
+        iframe.style.display= 'block';
+}
+//hide info in iframe
+function hideInfo() {
+    var iframe = document.getElementById('info');
+    iframe.style.display= 'none';
+}
 //VERIFY UPLOAD DATA IS A CSV
 function fileValidation() {
     var file = document.getElementById('csvFile');
