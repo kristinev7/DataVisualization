@@ -19,20 +19,18 @@ $(document).ready(function () {
         e.preventDefault();
         logout();
     });
-    $('#line').click(function(e) {
-        e.preventDefault();
+    $('#line').click(function() {
+        
         drawLine();
     });
-    $('#bar').click(function(e) {
-        e.preventDefault();
+    $('#bar').click(function() {
+        
         drawBar();
     });
-    $('#pie').click(function(e) {
-        e.preventDefault();
+    $('#pie').click(function() {
         drawPie();
     });
-    $('#exit').click(function(e) {
-        e.preventDefault();
+    $('#exit').click(function() {
         hideInfo();
     })
 })
@@ -256,7 +254,7 @@ function avgLineGraph(ddata) {
                 0: {side: 'top'}
             }
         },
-        hAxis:{
+        vAxis:{
             slantedText: true,
             slantedTextAngle: 90
         }
@@ -367,6 +365,35 @@ function estBarGraph(ddata) {
         var table = new google.charts.Bar(document.getElementById('displayGraph'));
         table.draw(newData, options);
 }
+//HR bar
+function hrBarGraph(ddata){
+    var d = ddata;
+    var data = new google.visualization.DataTable();
+    data.addColumn('string', 'Ballpark');
+    data.addColumn('number', 'Record_ID');
+    $.each(d, function(i, d) {
+        var park = d.Ballpark;
+        var id = parseInt(d.Record_ID);
+        data.addRows([[park, id]]);
+    })
+    var newData = google.visualization.data.group(data, 
+    [{
+        column: 0,
+        label: 'Ballpark',
+        type: 'string'
+    }],
+    [{
+        column: 1,
+        label: 'Number of Record_ID',
+        aggregation: google.visualization.data.count,
+        type: 'number'
+    }]);
+    var options = {
+        title: 'Total Home Runs In Every Park'
+    };
+    var table = new google.charts.Bar(document.getElementById('displayGraph'));
+    table.draw(newData, options);
+}
 //bar graph
 function drawBar() {
     var graphD = $('#dataToGraph:checked').val();
@@ -377,6 +404,9 @@ function drawBar() {
             $('#messageArea').text("Length of Data: " + `${dataLength}`);
         } else if (graphD === 'estEV') {
             estBarGraph(graphForData);
+            $('#messageArea').text("Length of Data: " + `${dataLength}`);
+        } else if(graphD === 'homeR') {
+            hrBarGraph(graphForData);
             $('#messageArea').text("Length of Data: " + `${dataLength}`);
         } else {
             var notice = "Please choose pie or line graph for data."
