@@ -1,4 +1,4 @@
-var dataforGraph;
+var dataForGraph=null;
 var dataLength;
 $(document).ready(function () {
     window.onload = function() {
@@ -76,7 +76,7 @@ function parseForGraph(){
             skipEmptyLines: true,
             complete: function(result) {
                 //console.log(result.data);
-                graphForData=result.data; 
+                dataForGraph=result.data; 
                 //console.log(graphForData);
             }
         });
@@ -205,7 +205,7 @@ function drawTable(csvData) {
     table.draw(data, {showRowNumber: true, width: '100%', height: '100%'});
 }
 
-//check if bbData is empty
+//check if graphForData is empty
 function checkData(data) {
     return(data ? 'true': 'false');
 }
@@ -383,22 +383,22 @@ function hrBarGraph(ddata){
 function drawBar() {
     var graphD = $('#dataToGraph:checked').val();
     // console.log(checkData(graphForData));
-    if (checkData(graphForData) === 'true') {
+    if (checkData(dataForGraph) === 'true') {
         if ( graphD === 'avgDist') {
-            avgBarGraph(graphForData);
+            avgBarGraph(dataForGraph);
             $('#messageArea').text("Length of Data: " + `${dataLength}`);
         } else if (graphD === 'estEV') {
-            estBarGraph(graphForData);
+            estBarGraph(dataForGraph);
             $('#messageArea').text("Length of Data: " + `${dataLength}`);
         } else if(graphD === 'homeR') {
-            hrBarGraph(graphForData);
+            hrBarGraph(dataForGraph);
             $('#messageArea').text("Length of Data: " + `${dataLength}`);
         } else {
-            var notice = "Please choose pie or line graph for data."
+            var notice = "Please choose appropriate graph for data."
             $('#displayGraph').text(notice);
             $('#messageArea').text(notice);
         }
-    } else {
+    } else if(dataForGraph === null){
         $('#messageArea').text("Please load data.")
         $('#displayGraph').text("Please load data.")
     }
@@ -407,16 +407,17 @@ function drawBar() {
 function drawLine() {
     var graphD = $('#dataToGraph:checked').val();
 // console.log(bbData);
-// console.log(checkData(bbData));
-    if (checkData(graphForData) === 'true') {
+    console.log(checkData(dataForGraph));
+
+    if (checkData(dataForGraph) === 'true') {
         if (graphD === 'avgDist')  {
-            avgLineGraph(graphForData);
+            avgLineGraph(dataForGraph);
             $('#messageArea').text("Length of Data: " + `${dataLength}`);
         } else if (graphD == 'estEV') {
-            estLineGraph(graphForData);
+            estLineGraph(dataForGraph);
             $('#messageArea').text("Length of Data: " + `${dataLength}`);
         }else {
-            var notice = "Please choose pie or bar graph for data."
+            var notice = "Please choose appropriate graph for data."
             $('#gdisplayGraph').text(notice);
             $('#messageArea').text(notice);
         }
@@ -428,12 +429,12 @@ function drawLine() {
 //Pie
 function drawPie() {
     var graphD = $('#dataToGraph:checked').val();
-    if (checkData(graphForData) === 'true') {
+    if (checkData(dataForGraph) === 'true') {
         if (graphD === 'homeR')  {
-            pieGraph(graphForData);
+            pieGraph(dataForGraph);
             $('#messageArea').text("Length of Data: " + `${dataLength}`);
         } else {
-            var notice = "Please choose line or bar graph for data."
+            var notice = "Please choose appropriate graph for data."
             $('#displayGraph').text(notice);
             $('#messageArea').text(notice);
         }
