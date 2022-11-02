@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 $myfile = fopen("testfile.txt", "a+") or die("unable");
 fwrite($myfile, "attempted get userinfo.\n");
 $msg="";

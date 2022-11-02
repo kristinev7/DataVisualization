@@ -122,6 +122,8 @@ function connectUser(uid,pw) {
 
             $("#msgForUser").css("display", "block");
             $("#messageArea").text(msg);
+            $("#displayGraph").text(msg);
+            $("#chart").text(msg);
         },
             error : function (xmlHttpRequest, textStatus, errorThrown) 
             {
@@ -180,6 +182,8 @@ function logout() {
             var msg = response;
             $("#msgForUser").css("display", "block");
             $("#messageArea").text(msg);
+            $("#displayGraph").text(msg);
+            $("#chart").text(msg);
         }
     })
 }
@@ -236,7 +240,7 @@ function avgLineGraph(ddata) {
         type: 'number'
     }]);
     var options = {
-        width: 1270,
+        width: '1000px',
         height: 500,
         hAxis:{
             textPosition:'out',
@@ -262,21 +266,20 @@ function estLineGraph(ddata) {
     });
     var newData = google.visualization.data.group(data, 
         [{
-            
             column: 0,
             label: 'Exit_Velocity',
             type: 'number'
-            
         }],
         [{
             column: 1,
             label: 'Elevation_Angle',
             aggregation: google.visualization.data.avg,
             type: 'number'
+            
         }]
       );
         var options = {
-            width: 1270,
+            width: '1000px',
             height: 500,
         };
         var table = new google.charts.Line(document.getElementById('displayGraph'));
@@ -288,11 +291,11 @@ function avgBarGraph(ddata) {
     //console.log(d);
     var data = new google.visualization.DataTable();
     data.addColumn('string', 'Ballpark');
-    data.addColumn('number',  'Distance');
+    data.addColumn('number',  'Apex');
     $.each(d, function(i, d) {
         var park = d.Ballpark;
         //console.log(park);
-        var distance = parseInt(d.Distance);
+        var distance = parseInt(d.Apex);
         //console.log(distance);
         data.addRows([[park, distance]]);
     });
@@ -303,7 +306,7 @@ function avgBarGraph(ddata) {
     }],
      [{
         column: 1, 
-        label: 'Avg Distance',
+        label: 'Avg Apex',
         aggregation: google.visualization.data.avg,
         type: 'number'
     }]
@@ -311,7 +314,7 @@ function avgBarGraph(ddata) {
     var options = {
         bars: 'horizontal',
         height: 500,
-        width: 1270
+        width: '1000px'
     };
     var table = new google.charts.Bar(document.getElementById('displayGraph'));
     table.draw(newData, options);
@@ -345,6 +348,7 @@ function estBarGraph(ddata) {
             // bars: 'horizontal',
             hAxis: {format: 'decimal'},
             height: 500,
+            width: '1000px',
             colors: ['#1b9e77', '#d95f02', '#7570b3']
         };
         var table = new google.charts.Bar(document.getElementById('displayGraph'));
@@ -374,7 +378,8 @@ function hrBarGraph(ddata){
         type: 'number'
     }]);
     var options = {
-        title: 'Total Home Runs In Every Park'
+        title: 'Total Home Runs In Every Park',
+        width: '1000px'
     };
     var table = new google.visualization.BarChart(document.getElementById('displayGraph'));
     table.draw(newData, options);
@@ -416,7 +421,11 @@ function drawLine() {
         } else if (graphD == 'estEV') {
             estLineGraph(dataForGraph);
             $('#messageArea').text("Length of Data: " + `${dataLength}`);
-        }else {
+        } else if (graphD === 'homeR') {
+            var notice = "Please choose appropriate graph for data."
+            $('#displayGraph').text(notice);
+            $('#messageArea').text(notice);
+        } else {
             var notice = "Please choose appropriate graph for data."
             $('#gdisplayGraph').text(notice);
             $('#messageArea').text(notice);
@@ -469,7 +478,8 @@ function pieGraph(ddata){
     }]
     );
     var options = {
-        title: 'Total Home Runs In Every Park'
+        title: 'Total Home Runs In Every Park',
+        width: '1000px'
     };
     var table = new google.visualization.PieChart(document.getElementById('displayGraph'));
     table.draw(newData, options);
