@@ -19,17 +19,6 @@ $(document).ready(function () {
         e.preventDefault();
         logout();
     });
-    $('#line').click(function() {
-        
-        drawLine();
-    });
-    $('#bar').click(function() {
-        
-        drawBar();
-    });
-    $('#pie').click(function() {
-        drawPie();
-    });
     $('#exit').click(function() {
         hideInfo();
     })
@@ -249,18 +238,14 @@ function avgLineGraph(ddata) {
     var options = {
         width: 1270,
         height: 500,
-        axes: {
-            x: {
-                0: {side: 'top'}
-            }
-        },
-        vAxis:{
+        hAxis:{
+            textPosition:'out',
             slantedText: true,
-            slantedTextAngle: 90
+            slantedTextAngle: -45
         }
     };
     // var table = new google.visualization.LineChart(document.getElementById('chart_div'));
-    var table = new google.charts.Line(document.getElementById('displayGraph'));
+    var table = new google.visualization.LineChart(document.getElementById('displayGraph'));
     table.draw(newData, options);
     //google.charts.Line.convertOptions(options)
 }
@@ -391,7 +376,7 @@ function hrBarGraph(ddata){
     var options = {
         title: 'Total Home Runs In Every Park'
     };
-    var table = new google.charts.Bar(document.getElementById('displayGraph'));
+    var table = new google.visualization.BarChart(document.getElementById('displayGraph'));
     table.draw(newData, options);
 }
 //bar graph
@@ -410,12 +395,12 @@ function drawBar() {
             $('#messageArea').text("Length of Data: " + `${dataLength}`);
         } else {
             var notice = "Please choose pie or line graph for data."
-            $('#graphArea').text(notice);
+            $('#displayGraph').text(notice);
             $('#messageArea').text(notice);
         }
     } else {
         $('#messageArea').text("Please load data.")
-        $('#graphArea').text("Please load data.")
+        $('#displayGraph').text("Please load data.")
     }
 }
 //line
@@ -432,12 +417,12 @@ function drawLine() {
             $('#messageArea').text("Length of Data: " + `${dataLength}`);
         }else {
             var notice = "Please choose pie or bar graph for data."
-            $('#graphArea').text(notice);
+            $('#gdisplayGraph').text(notice);
             $('#messageArea').text(notice);
         }
     } else {
         $('#messageArea').text("Please load data.")
-        $('#graphArea').text("Please load data.")
+        $('#displayGraph').text("Please load data.")
     }
 }
 //Pie
@@ -449,12 +434,12 @@ function drawPie() {
             $('#messageArea').text("Length of Data: " + `${dataLength}`);
         } else {
             var notice = "Please choose line or bar graph for data."
-            $('#graphArea').text(notice);
+            $('#displayGraph').text(notice);
             $('#messageArea').text(notice);
         }
     } else {
         $('#messageArea').text("Please load data.")
-        $('#graphArea').text("Please load data.")
+        $('#displayGraph').text("Please load data.")
     }
 }
 //pie graph
