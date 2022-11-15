@@ -23,6 +23,8 @@ function loadData(data) {
             //console.log(response);
             stateData = response;
             console.log(stateData);
+            var state = d3.hierarchy(stateData[, children]);
+            
 
         },
             error: function(xmlHttpRequest, textStatus, errorThrown) {
