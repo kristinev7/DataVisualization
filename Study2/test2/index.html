@@ -3,6 +3,9 @@
     <head>
         <title>State Data</title>
         <link rel="stylesheet" href="./style.css">
+        <script src="//d3js.org/d3.v3.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+        <script src="script.js"></script>  
     </head>
     <body>
         <h1 align='center'>State Data</h1>
@@ -12,18 +15,21 @@
                 <p>Choose data:</p>
                 <input type="radio" id="d" name="data" value="Total Wages"/>
                 <label>Total Wages</label>
-                <input type="radio" id="d" name="data" value="Population"/>
+                <input type="radio" id="d" name="data" value="Estimated Population"/>
                 <label>Population</label>
             </form>
         </div>
         <div>
             <button type="button" name="show" id="show">Show Data</button>
         </div>
-        <div id="canvas">
+        <div>
+            <svg id="canvas">
+
+            </svg>
 
         </div>    
 
 
-        <script src="script.js"></script>  
+        
     </body>
 </html>

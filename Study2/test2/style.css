@@ -16,5 +16,5 @@ svg{
 #canvas{
     min-width: 1000px;
     min-height: 600px;
-    background-color: whitesmoke;
+    /* background-color: whitesmoke; */
 }
