@@ -15,7 +15,7 @@
                         'state' => $row['State'],
                         'city' => $row['City'],
                         'zipcode' => $row['Zipcode'],
-                        'estimatedPopulation' => $row['EstimatedPopulation']
+                        'value' => $row['EstimatedPopulation']
                     );
                 }
                 header('Content-Type: application/json');
@@ -29,7 +29,7 @@
                             'state' => $row['State'],
                             'city' => $row['City'],
                             'zipcode' => $row['Zipcode'],
-                            'total_wages' => $row['TotalWages']
+                            'value' => $row['TotalWages']
                         );
                     }
                     header('Content-Type: application/json');
