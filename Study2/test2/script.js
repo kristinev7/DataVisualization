@@ -1,4 +1,4 @@
-var stateData
+var stateData=null;
 
 $(document).ready(function () {
     $('#show').click(function () {
@@ -23,8 +23,11 @@ function loadData(data) {
             //console.log(response);
             stateData = response;
             console.log(stateData);
-            var state = d3.hierarchy(stateData[, children]);
-            
+            var state = d3.nest()
+                .key(function(d) {return d.State})
+                .entries(stateData);
+            console.log(state);
+
 
         },
             error: function(xmlHttpRequest, textStatus, errorThrown) {
