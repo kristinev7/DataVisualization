@@ -24,7 +24,7 @@ function loadData(data) {
             stateData = response;
             console.log(stateData);
             var state = d3.nest()
-                .key(function(d) {return d.State})
+                .key(function(d) {return d.state})
                 .entries(stateData);
             console.log(state);
 
