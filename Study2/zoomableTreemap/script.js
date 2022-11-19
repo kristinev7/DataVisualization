@@ -39,9 +39,9 @@ function loadData(data) {
                 
                 const root = treemap(hierarchy);
                 console.log(root);
-                console.log(hierarchy);
+                console.log(treemap);
                 // // drawTreeMap(state);
-                const categories = dataset.children.map(d=>d.state),      
+                const categories = treemap.children.map(d=>d.state),      
 
                     colors = ['#1C1832', '#9E999D', '#F2259C', '#347EB4', 
                         '#08ACB6', '#91BB91', '#BCD32F', '#75EDB8',

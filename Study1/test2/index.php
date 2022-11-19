@@ -1,5 +1,6 @@
 <?php
-    include '../../../CPS4745/dbconfig.php';
+    #include '../../../CPS4745/dbconfig.php'; #connection to laptoplocalhost
+    include '../../../CPS4745/desktopConn.php'; #connection to desktoplocalhost
     $mycon = mysqli_connect($host, $username, $dbpassword, $dbname);//connection
     //check connection
     if(!$mycon) {
