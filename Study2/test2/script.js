@@ -25,37 +25,45 @@ function loadData(data) {
         {
             //console.log(response);
             stateData = response;
-            //console.log(stateData);
+            console.log(stateData);
             var state = d3.nest()
                 .key(function(d) {return d.state})
                 .entries(stateData);
                 console.log(state);
+                const hierarchy = d3.hierarchy(state, d => d.children)
+                    .sum(d=> d.value)  //sum every child's values
+                    .sort((a,b)=>b.value-a.value) // and sort them in descending order 
+                const treemap = d3.treemap()
+                    .size([1000, 600]) // width: 400px, height:450px
+                    .padding(1);
                 
-            let hierarchy = d3.hierarchy(state, (node) => {
-                    return node['children']
-                }).sum(
-                    (node) => {
-                        return node['value']
-                    }
-                ).sort (
-                    (node1, node2) => {
-                        return node2['value'] - node1['value']
-                    }
-                )
-            d3.treemap().size([1000, 600])(hierarchy)
-            let tiles = hierarchy.leaves();
-            console.log(tiles);
+                const root = treemap(hierarchy);
+                console.log(root);
+                console.log(hierarchy);
+                // // drawTreeMap(state);
+                const categories = dataset.children.map(d=>d.state),      
 
-                // const hierarchy = d3.hierarchy(state)
-                //     .sum(d=>d.value)  //sum every child's values
-                //     .sort((a,b)=>b.value-a.value) // and sort them in descending order 
-                // const treemap = d3.treemap()
-                //     .size([1000, 600]) // width: 400px, height:450px
-                //     .padding(1);
-                // const root = treemap(hierarchy);
-                // //console.log(root.leaves);
-                // console.log(hierarchy.leaves());
-                // drawTreeMap(state);
+                    colors = ['#1C1832', '#9E999D', '#F2259C', '#347EB4', 
+                        '#08ACB6', '#91BB91', '#BCD32F', '#75EDB8',
+                        "#89EE4B", '#AD4FE8', '#D5AB61', '#BC3B3A',
+                        '#F6A1F9', '#87ABBB', '#412433', '#56B870', 
+                        '#FDAB41', '#64624F'],
+
+                    colorScale = d3.scaleOrdinal() // the scale function
+                        .domain(categories) // the data
+                        .range(colors); 
+                
+                const svg = d3.select("svg"); //make sure there's a svg element in your html file
+                    svg.selectAll("rect")
+                           .data(root.leaves())
+                           .enter()
+                           .append("rect")
+                           .attr("x", d=>d.x0)
+                           .attr("y", d=>d.y0)
+                           .attr("width",  d=>d.x1 - d.x0)
+                           .attr("height", d=>d.y1 - d.y0)
+                           .attr("fill", d=>colorScale(d.data.state));
+                          
                 
         },
             error: function(xmlHttpRequest, textStatus, errorThrown) {
