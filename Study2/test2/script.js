@@ -29,9 +29,9 @@ function loadData(data) {
             var state = d3.nest()
                 .key(function(d) {return d.state})
                 .entries(stateData);
-                console.log(state);ss
+                console.log(state);
                 
-            let hierarchy = d3.hierarchy(stateData, (node) => {
+            let hierarchy = d3.hierarchy(state, (node) => {
                     return node['children']
                 }).sum(
                     (node) => {
