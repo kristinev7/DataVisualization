@@ -56,10 +56,82 @@ function loadData(data) {
             let createTreemap = d3.treemap() 
                     .size([1000,600])(hierarchy)
             
-          console.log(createTreemap)
+            console.log(createTreemap) //yeh
             let stateTiles = createTreemap.leaves()  
-            console.log(stateTiles);        
-                
+            console.log(stateTiles);  
+            
+            let canvas = d3.select("#canvas");
+            
+            let block = canvas.selectAll('g')
+                .data(stateTiles)
+                .enter()
+                .append('g')
+
+            block.append('rect')
+                .attr('class', 'tile')
+                .attr('fill', (stateTiles) => {
+                    let category = stateTiles['data']['state']
+                    if(category === 'NY'){
+                        return 'orange'
+                    }else if(category === 'CT'){
+                        return 'lightgreen'
+                    }else if(category === 'NJ'){
+                        return 'crimson'
+                    }else if(category === 'TN'){
+                        return 'steelblue'
+                    }else if(category === 'OH'){
+                        return 'pink'
+                    }else if(category === 'KS'){
+                        return 'khaki'
+                    }else if(category === 'CO'){
+                        return 'tan'
+                    }else if(category === 'UT'){
+                        return 'lightgreen'
+                    }else if(category === 'AZ'){
+                        return 'crimson'
+                    }else if(category === 'NM'){
+                        return 'steelblue'
+                    }else if(category === 'NV'){
+                        return 'pink'
+                    }else if(category === 'OR'){
+                        return 'khaki'
+                    }else if(category === 'CA'){
+                        return 'tan'
+                    }else if(category === 'HI'){
+                        return 'lightgreen'
+                    }else if(category === 'FL'){
+                        return 'crimson'
+                    }else if(category === 'TX'){
+                        return 'steelblue'
+                    }else if(category === 'IN'){
+                        return 'pink'
+                    }else if(category === 'MI'){
+                        return 'khaki'
+                    }else if(category === 'IL'){
+                        return 'tan'
+                    } else if(category === 'MO'){
+                        return 'lightgreen'
+                    }else if(category === 'MD'){
+                        return 'crimson'
+                    }else if(category === 'VA'){
+                        return 'steelblue'
+                    }else if(category === 'NC'){
+                        return 'pink'
+                    }else if(category === 'SC'){
+                        return 'khaki'
+                    }else if(category === 'GA'){
+                        return 'tan'
+                    }
+                    
+                }).attr('data-name', (stateTiles) => {
+                    return stateTiles['data']['state']
+                })
+                .attr('data-city', (movie) => {
+                    return stateTiles['data']['city']
+                })
+                .attr('data-value', (movie) => {
+                    return stateTiles['data']['value']
+                })
         },
             error: function(xmlHttpRequest, textStatus, errorThrown) {
                 alert("Error " + errorThrown);
