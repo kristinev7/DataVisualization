@@ -1,9 +1,10 @@
 var stateData=null;
 var state;
+var data="";
 
 $(document).ready(function () {
     $('#show').click(function () {
-        var data = $('#d:checked').val();
+         data = $('#d:checked').val();
         if (data != undefined) {
             console.log(data);
             loadData(data);
@@ -26,13 +27,7 @@ function loadData(data) {
            // console.log(stateData);
             //console.log(stateData[0]); //returns first obj
             //console.log(stateData[0].state); //returns NY
-            // var nested = d3.nest()
-            //     .key(function(d,i){ return d.state; })
-            //     .entries(stateData);
-            // console.log(nested);
-
             var newData = {"state": "root", "children": {}};
-            
             stateData.forEach(function (d) {
                 if (typeof newData.children[d.state] !== 'undefined') {
                     newData.children[d.state].children.push(d)
@@ -45,7 +40,16 @@ function loadData(data) {
             })
             console.log("newData:")
             console.log(newData);
-            let hierarchy = d3.hierarchy(newData)
+            drawTreeMap(newData);
+        },
+            error: function(xmlHttpRequest, textStatus, errorThrown) {
+                alert("Error " + errorThrown);
+            }
+    });
+}
+
+let drawTreeMap = (newData) => {
+    let hierarchy = d3.hierarchy(newData)
                     .sum(function(d){ return d.value})
                     .sort(
                         (node1, node2) => {
@@ -61,16 +65,18 @@ function loadData(data) {
             console.log(stateTiles);  
             
             let canvas = d3.select("#canvas");
-            
+            let tooltip = d3.select("#tooltip")
             let block = canvas.selectAll('g')
                 .data(stateTiles)
                 .enter()
                 .append('g')
-
+                .attr('transform', (Object) => {
+                    return 'translate(' + Object['x0'] + ', ' + Object['y0'] + ')'
+            })
             block.append('rect')
                 .attr('class', 'tile')
-                .attr('fill', (stateTiles) => {
-                    let category = stateTiles['data']['state']
+                .attr('fill', (Object) => {
+                    let category = Object['data']['state']
                     if(category === 'NY'){
                         return 'orange'
                     }else if(category === 'CT'){
@@ -123,18 +129,48 @@ function loadData(data) {
                         return 'tan'
                     }
                     
-                }).attr('data-name', (stateTiles) => {
-                    return stateTiles['data']['state']
+                }).attr('data-name', (Object) => {
+                    return Object['data']['state']
+                }).attr('data-city', (Object) => {
+                    return Object['data']['city']
+                }).attr('data-value', (Object) => {
+                    return Object['data']['value']
+                }).attr('width', (Object) => {
+                    return Object['x1'] - Object['x0']
+                }).attr('height', (Object) => {
+                    return Object['y1'] - Object['y0']
+                }).on('mouseover', (Object) => {
+                    tooltip.transition()
+                            .style('visibility', 'visible')
+                    console.log(data);
+                    let value = Object['data']['value'].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+
+                    if (data === 'Total Wages') {
+                        tooltip.html(
+                            'Total Wages: $' + value + '<br>' + Object['data']['city'] + 
+                            ', \n' + Object['data']['state'] + '<hr/>'
+                        )
+                    } else {
+                        tooltip.html(
+                             'Total Population: ' + value + '<br>'+ Object['data']['city'] + 
+                             ', \n' + Object['data']['state'] + '<hr/>'
+                        ) 
+                    }
+                    
+                    tooltip.attr('data-value', Object['data']['value'])
+                }).on('mouseout', (Object) => {
+                    tooltip.transition()
+                        .style('visibility', 'hidden')
                 })
-                .attr('data-city', (movie) => {
-                    return stateTiles['data']['city']
+            
+            block.append('text')
+                .text((Object) => {
+                    return Object['data']['state']
                 })
-                .attr('data-value', (movie) => {
-                    return stateTiles['data']['value']
+            block.append('text')    
+                .text((Object) => {
+                    return Object['data']['city']
                 })
-        },
-            error: function(xmlHttpRequest, textStatus, errorThrown) {
-                alert("Error " + errorThrown);
+                .attr('x', 5)
+                .attr('y', 20)
             }
-    });
-}
