@@ -174,3 +174,10 @@ let drawTreeMap = (newData) => {
                 .attr('x', 5)
                 .attr('y', 20)
             }
+
+
+
+
+
+
+//sources: https://www.youtube.com/watch?v=wvfBn7GCCHk, https://observablehq.com/@d3/zoomable-treemap
