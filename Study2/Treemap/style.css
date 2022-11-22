@@ -21,13 +21,14 @@ svg{
 
 #info{
     visibility: hidden;
-    min-height: 160px;
+    min-height: 50px;
     width: 200px;
     margin-top: 2px;
     color: #1D1F20;
     font-size: 15px;
     margin-bottom: 5px;
-    text-align: center;
+    align-items: left;
+    /* text-align: left; */
 }
 #info hr {
     width: '80%';

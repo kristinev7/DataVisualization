@@ -127,7 +127,7 @@ let drawTreeMap = (newData) => {
                     }else if(category === 'SC'){
                         return 'khaki'
                     }else if(category === 'GA'){
-                        return 'tan'
+                        return '#c3e8de'
                     }
                     
                 }).attr('data-name', (Object) => {
