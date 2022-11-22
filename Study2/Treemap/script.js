@@ -15,6 +15,7 @@ $(document).ready(function () {
 });
 
 function loadData(data) {
+    $("#canvas").empty();
     $.ajax({
         url: 'fetch.php',
         type: 'GET',
@@ -65,7 +66,7 @@ let drawTreeMap = (newData) => {
             console.log(stateTiles);  
             
             let canvas = d3.select("#canvas");
-            let tooltip = d3.select("#tooltip")
+            let info = d3.select("#info")
             let block = canvas.selectAll('g')
                 .data(stateTiles)
                 .enter()
@@ -78,41 +79,41 @@ let drawTreeMap = (newData) => {
                 .attr('fill', (Object) => {
                     let category = Object['data']['state']
                     if(category === 'NY'){
-                        return 'orange'
+                        return '#00FFFF'
                     }else if(category === 'CT'){
-                        return 'lightgreen'
+                        return '#9E999D';
                     }else if(category === 'NJ'){
-                        return 'crimson'
+                        return '#F2259C'
                     }else if(category === 'TN'){
-                        return 'steelblue'
+                        return '#347EB4'
                     }else if(category === 'OH'){
-                        return 'pink'
+                        return '#08ACB6'
                     }else if(category === 'KS'){
-                        return 'khaki'
+                        return '#91BB91'
                     }else if(category === 'CO'){
-                        return 'tan'
+                        return '#BCD32F'
                     }else if(category === 'UT'){
-                        return 'lightgreen'
+                        return '#75EDB8'
                     }else if(category === 'AZ'){
-                        return 'crimson'
+                        return '#89EE4B'
                     }else if(category === 'NM'){
-                        return 'steelblue'
+                        return '#AD4FE8'
                     }else if(category === 'NV'){
-                        return 'pink'
+                        return '#D5AB61'
                     }else if(category === 'OR'){
-                        return 'khaki'
+                        return '#BC3B3A'
                     }else if(category === 'CA'){
-                        return 'tan'
+                        return '#F6A1F9'
                     }else if(category === 'HI'){
-                        return 'lightgreen'
+                        return '#87ABBB'
                     }else if(category === 'FL'){
-                        return 'crimson'
+                        return '#412433'
                     }else if(category === 'TX'){
-                        return 'steelblue'
+                        return '#56B870'
                     }else if(category === 'IN'){
-                        return 'pink'
+                        return '#FDAB41'
                     }else if(category === 'MI'){
-                        return 'khaki'
+                        return '#64624F'
                     }else if(category === 'IL'){
                         return 'tan'
                     } else if(category === 'MO'){
@@ -140,26 +141,26 @@ let drawTreeMap = (newData) => {
                 }).attr('height', (Object) => {
                     return Object['y1'] - Object['y0']
                 }).on('mouseover', (Object) => {
-                    tooltip.transition()
+                    info.transition()
                             .style('visibility', 'visible')
                     console.log(data);
                     let value = Object['data']['value'].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
 
                     if (data === 'Total Wages') {
-                        tooltip.html(
+                        info.html(
                             'Total Wages: $' + value + '<br>' + Object['data']['city'] + 
-                            ', \n' + Object['data']['state'] + '<hr/>'
+                            ', \n' + Object['data']['state'] + '\n' + Object['data']['zipcode'] + '<hr/>'
                         )
                     } else {
-                        tooltip.html(
+                        info.html(
                              'Total Population: ' + value + '<br>'+ Object['data']['city'] + 
-                             ', \n' + Object['data']['state'] + '<hr/>'
+                             ', \n' + Object['data']['state'] + '\n' + Object['data']['zipcode'] + '<hr/>'
                         ) 
                     }
                     
-                    tooltip.attr('data-value', Object['data']['value'])
+                    info.attr('data-value', Object['data']['value'])
                 }).on('mouseout', (Object) => {
-                    tooltip.transition()
+                    info.transition()
                         .style('visibility', 'hidden')
                 })
             
@@ -167,12 +168,14 @@ let drawTreeMap = (newData) => {
                 .text((Object) => {
                     return Object['data']['state']
                 })
+                .style('font', "10px sans-serif");
             block.append('text')    
                 .text((Object) => {
                     return Object['data']['city']
                 })
-                .attr('x', 5)
-                .attr('y', 20)
+                .attr('x', 10)
+                .attr('y', 30)
+                .style('font', "10px sans-serif");
             }
 
 
