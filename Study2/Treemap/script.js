@@ -59,7 +59,8 @@ let drawTreeMap = (newData) => {
                 console.log(hierarchy);
                     
             let createTreemap = d3.treemap() 
-                    .size([1000,600])(hierarchy)
+                    .size([1000,600])
+                    .paddingOuter(.5)(hierarchy)
             
             console.log(createTreemap) //yeh
             let stateTiles = createTreemap.leaves()  
@@ -144,7 +145,7 @@ let drawTreeMap = (newData) => {
                     info.transition()
                             .style('visibility', 'visible')
                     console.log(data);
-                    let value = Object['data']['value'].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                    let value = Object['data']['value'].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") //https://regex101.com/r/WldKAq/1
 
                     if (data === 'Total Wages') {
                         info.html(
@@ -168,13 +169,16 @@ let drawTreeMap = (newData) => {
                 .text((Object) => {
                     return Object['data']['state']
                 })
-                .style('font', "10px sans-serif");
+                .attr('x', 5)
+                .attr('y', 35)
+                .style('font', "8px sans-serif")
             block.append('text')    
                 .text((Object) => {
                     return Object['data']['city']
                 })
-                .attr('x', 10)
-                .attr('y', 30)
+                .style('font', "8px sans-serif")
+                .attr('x', 1)
+                .attr('y', 20)
                 .style('font', "10px sans-serif");
             }
 

@@ -26,7 +26,7 @@ function loadData(data) {
             console.log(stateData);
             let data = d3.nest()
                 .key(function (d) {return d.state;})
-                // .key(function (d) {return d.city;})
+                .key(function (d) {return d.city;})
                 .object(stateData);
             console.log(data);
             drawTreeMap(data);
