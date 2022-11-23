@@ -60,7 +60,8 @@ let drawTreeMap = (newData) => {
                     
             let createTreemap = d3.treemap() 
                     .size([1000,600])
-                    .paddingOuter(.5)(hierarchy)
+                    .paddingOuter(3)
+                    .padding(2)(hierarchy)
             
             console.log(createTreemap) //yeh
             let stateTiles = createTreemap.leaves()  
