@@ -1,0 +1,44 @@
+html, body{
+    min-height: 100%
+}
+
+body{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+#t {
+    padding-right: 800px;
+    display:inline-block;
+}
+hr {
+    border: 1px solid black;
+}
+svg{
+    background-color: whitesmoke;
+}
+
+#canvas{
+    min-width: 1000px;
+    min-height: 600px;
+    /* background-color: whitesmoke; */
+}
+#info{
+    visibility: hidden;
+    min-height: 50px;
+    width: 200px;
+    margin-top: 2px;
+    color: #1D1F20;
+    font-size: 15px;
+    margin-bottom: 5px;
+    align-items: left;
+    /* text-align: left; */
+}
+#info hr {
+    width: '80%';
+    color: #1D1F20;
+    background-color: #1D1F20;
+    height:1px;
+    border:none;
+}

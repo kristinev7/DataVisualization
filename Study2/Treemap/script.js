@@ -1,5 +1,5 @@
-var stateData=null;
-var state;
+// var stateData=null;
+// var state;
 var data="";
 
 $(document).ready(function () {

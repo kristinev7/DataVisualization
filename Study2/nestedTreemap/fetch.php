@@ -1,7 +1,7 @@
 <?php
     if(isset($_GET['data'])) {
-        include '../../../CPS4745/dbconfig.php'; #connection to laptop localhost
-        #include '../../../CPS4745/desktopConn.php'; #connection to desktoplocalhost
+        #include '../../../CPS4745/dbconfig.php'; #connection to laptop localhost
+        include '../../../CPS4745/desktopConn.php'; #connection to desktoplocalhost
         $pop = $_GET['data'];
         $data = array();
         $mycon = mysqli_connect($host, $username, $dbpassword, $dbname);
