@@ -25,7 +25,7 @@ function loadData(data) {
         {
             //console.log(response);
             stateData = response;
-           // console.log(stateData);
+            console.log(stateData);
             //console.log(stateData[0]); //returns first obj
             //console.log(stateData[0].state); //returns NY
             var newData = {"state": "root", "children": {}};
@@ -56,14 +56,14 @@ let drawTreeMap = (newData) => {
                         (node1, node2) => {
                             return node2['value'] - node1['value']
                         })
-                console.log(hierarchy);
+                //console.log(hierarchy);
                     
             let createTreemap = d3.treemap() 
                     .size([1000,600])
                     .paddingOuter(3)
                     .padding(2)(hierarchy)
             
-            console.log(createTreemap) //yeh
+            //console.log(createTreemap) //yeh
             let stateTiles = createTreemap.leaves()  //thechildren
             console.log(stateTiles);  
             
@@ -108,7 +108,7 @@ let drawTreeMap = (newData) => {
                         return '#F6A1F9'
                     }else if(category === 'HI'){
                         return '#87ABBB'
-                    }else if(category === 'FL'){
+                    }else if(category === 'FL'){ 
                         return '#412433'
                     }else if(category === 'TX'){
                         return '#56B870'
@@ -145,7 +145,7 @@ let drawTreeMap = (newData) => {
                 }).on('mouseover', (Object) => {
                     info.transition()
                             .style('visibility', 'visible')
-                    console.log(data);
+                    //console.log(data);
                     let value = Object['data']['value'].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") //https://regex101.com/r/WldKAq/1
 
                     if (data === 'Total Wages') {
