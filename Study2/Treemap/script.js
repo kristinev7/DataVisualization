@@ -64,7 +64,7 @@ let drawTreeMap = (newData) => {
                     .padding(2)(hierarchy)
             
             console.log(createTreemap) //yeh
-            let stateTiles = createTreemap.leaves()  
+            let stateTiles = createTreemap.leaves()  //thechildren
             console.log(stateTiles);  
             
             let canvas = d3.select("#canvas");
