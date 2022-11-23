@@ -8,10 +8,19 @@ body{
     justify-content: center;
     align-items: center;
 }
+#t {
+    padding-right: 800px;
+    display:inline-block;
+}
+
+hr {
+    border: 1px solid black;
+}
 
 svg{
     background-color: whitesmoke;
 }
+
 
 #canvas{
     min-width: 1000px;
