@@ -1,5 +1,8 @@
 var dataForGraph=null;
 var dataLength;
+var dataP2 = null;
+var uid;
+//console.log(uid);
 $(document).ready(function () {
     window.onload = function() {
         var iframe = document.getElementById('info');
@@ -11,7 +14,7 @@ $(document).ready(function () {
     $('#submit').click (function (e) {
         e.preventDefault();
         $('.button').modal('hide');
-        var uid = $('#uid').val();
+         uid = $('#uid').val();
         var pw = $('#pw').val();
         connectUser(uid, pw);   
     });
@@ -22,7 +25,83 @@ $(document).ready(function () {
     $('#exit').click(function() {
         hideInfo();
     })
+    const p2 = document.getElementById('p2');
+    // document.getElementById('data1').addEventListener('click', () => {
+    //     showP2(); 
+    // })
 })
+//show p2
+function showP2() {
+    console.log(uid);
+    if ( uid !== undefined) {
+        if (document.getElementById('data1').click) {
+            p2.style.display = 'inline-block';
+        } 
+    } else 
+     {
+        p2.style.display = 'none';
+    } 
+}
+
+// load DB data1
+function data1() {
+    $.ajax({
+        url: 'getData1.php',
+        type: 'POST',
+        dataType: 'json',
+        success: function(response)
+        {
+            console.log("data1: ", response);
+            var msg;
+            if (!Array.isArray(response)) {
+                msg = response;
+                $("#msgForUser").css("display", "block");
+                $("#messageArea").text(msg);
+                $("#displayGraph").text(msg);
+                $("#chart").text(msg);
+            } else {
+                dataP2 = response;
+                drawData1(dataP2);
+                showP2();
+            }
+            
+        },
+        error : function (xmlHttpRequest, textStatus, errorThrown) 
+        {
+            console.log(textStatus);
+            console.log("Error " + errorThrown);
+        } 
+    })
+}
+// load DB data2
+function data2() {
+    $.ajax({
+        url: 'getData2.php',
+        type: 'POST',
+        dataType: 'json',
+        success: function(response)
+        {
+            console.log("data2: ", response);
+            var msg;
+            if (!Array.isArray(response)) {
+                msg = response;
+                $("#msgForUser").css("display", "block");
+                $("#messageArea").text(msg);
+                $("#displayGraph").text(msg);
+                $("#chart").text(msg);
+            } else {
+                drawData1(response);
+                showP2();
+            }
+            
+        },
+        error : function (xmlHttpRequest, textStatus, errorThrown) 
+        {
+            console.log(textStatus);
+            console.log("Error " + errorThrown);
+        } 
+    })
+}
 //show info in an iframe
 function displayInfo() {
         var iframe = document.getElementById('info');
@@ -61,7 +140,7 @@ function parseData() {
                 console.log(dataLength);
                 var bbData=res.data;
                 $('#messageArea').text("Length of Data: " + `${dataLength}`);
-                //console.log(bbData);
+                console.log(bbData);
                 parseForGraph(bbData);
                 drawTable(bbData);
             }
@@ -145,7 +224,7 @@ function userInfo() {
         success:function(response)
         {
             console.log(response);
-            var uid = response[0]['uid'];
+             uid = response[0]['uid'];
             var login = response[0]['login'];
             var name = response[0]['name'];
             var gender = response[0]['gender'];
@@ -179,11 +258,13 @@ function logout() {
         success:function(response)
         {
             console.log(response);
+            uid = undefined;
             var msg = response;
             $("#msgForUser").css("display", "block");
             $("#messageArea").text(msg);
             $("#displayGraph").text(msg);
             $("#chart").text(msg);
+            showP2();
         }
     })
 }
@@ -199,6 +280,7 @@ function closeWindow() {
 //TABLE
 function drawTable(csvData) {
     var data = new google.visualization.arrayToDataTable(csvData);
+    console.log("data: ", data);
     var options = {
         width: '1000px',
     };
@@ -239,6 +321,7 @@ function avgLineGraph(ddata) {
         aggregation: google.visualization.data.avg,
         type: 'number'
     }]);
+
     var options = {
         width: '1000px',
         height: 500,
@@ -485,9 +568,37 @@ function pieGraph(ddata){
     table.draw(newData, options);
 }
 
-
-
-
+function drawData1(d) {
+    var d = d;
+    var dataVis = new google.visualization.DataTable(d);
+    dataVis.addColumn('number', 'RecordNumber');
+    dataVis.addColumn('number', 'Zipcode');
+    dataVis.addColumn('string', 'City');
+    dataVis.addColumn('string', 'State');
+    dataVis.addColumn('number', 'EstimatedPopulation');
+    dataVis.addColumn('number', 'TotalWages');
+    dataVis.addColumn('number', 'AvgWages');
+    $.each(d, function(i, d) {
+        var rn = parseInt(d.RecordNumber);
+        //console.log(rn);
+        var z = parseInt(d.Zipcode);
+        //console.log(z);
+        var c = d.City;
+        //console.log(c);
+        var s = d.State;
+        //console.log(s);
+        var ep = parseInt(d.EstimatedPopulation);
+        //console.log(ep);
+        var tw = parseFloat(d.TotalWages);
+        //console.log(tw);
+        var aw = parseFloat(d.AvgWages);
+        //console.log(aw);
+        dataVis.addRows([[rn, z, c, s, ep, tw, aw]])
+    });
+    //console.log(dataVis);
+    var table = new google.visualization.Table(document.getElementById('chart'));
+    table.draw(dataVis, {showRowNumber: true, width: '100%', height: '100%'});
+}
 
 
 

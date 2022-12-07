@@ -4,7 +4,7 @@
 // fwrite($myfile, "attempted login.\n");
 // fwrite($myfile, "user: " . $_POST['uid'] . " pass: " . $_POST['pw'] . "\n");
 if(isset($_POST['uid']) && isset($_POST['pw'])) {
-    include '../../../CPS4745/dbconn.php';
+    include '../../../CPS4745/dbconn.php'; //school db connection, datamining
     $userId="";
     $userPw="";
     $login="";
