@@ -596,7 +596,9 @@ function drawData1(d) {
         //console.log(aw);
         dataVis.addRows([[rn, z, c, s, ep, tw, aw]])
     });
-
+    var range = dataVis.getColumnRange(6);
+    console.log(range);
+    
     var avgL = google.visualization.data.group(dataVis, [{
         column: 0,
         label: 'Number of Wages',
