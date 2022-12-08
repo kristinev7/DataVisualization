@@ -72,6 +72,7 @@
                             <li><a type='button' class="dropdown-item" id="line" onclick="drawLine();">Line</a></li>
                             <li><a type='button' class="dropdown-item" id="bar" onclick="drawBar();">Bar</a></li>
                             <li><a type='button' class="dropdown-item" id="pie"onclick="drawPie();">Pie</a></li>
+                            <li><a type='button' class="dropdown-item" id="new" >New Charts</a></li>
                           </ul>
                     </li>
                     <li class="nav-item dropdown">
@@ -172,24 +173,29 @@
             <div class="row align-items-start">
                 <div class="row bg-dark text-white p-3" >
                     <p>Please select one choice and choose a graph in the View Menu for CSV File:</p>
-                        <input type="radio" id="data2" name="dataP2" value="avg"/>
+                        <input type="radio" id="data2" name="dataP2" value="avg" onclick='displayCharts();'/>
                         <label>Average Wages[Bar, Line]</label><br>
-                        <input type="radio" id="data2" name="dataP2" value="est"/>
+                        <input type="radio" id="data2" name="dataP2" value="est" onclick='displayCharts();'/>
                         <label>Estimated Population [Bar, Line]</label><br>
-                        <input type="radio" id="data2" name="dataP2" value="count"/>
+                        <input type="radio" id="data2" name="dataP2" value="count" onclick='displayCharts();'/>
                         <label>State Counts [Bar, Pie]</label>
                 </div>
             </div> 
         </div>
     </section>
 
-    </section class="p-2 text-center">
-        <div class="container text-center" >
+    </section class="p-5 text-center">
+        <div class="container text-center" style="display: block">
             <div class="row align-items-start" id="graphArea">
-                <div class="text-bg-danger p-3 m-2 mt-0">
+                <div class="text-bg-danger p-5 m-2 mt-0">
                     Graph Area
                     <div id="displayGraph" style = "height:500px; width:100%; display:block;"></div>
                 </div>
+                <div class="text-bg-danger p-5 m-2 mt-0">
+                    <div id="dGraph2" style = "height:500px; width:100%; display:block;">
+                    </div>
+                </div>
+                
             </div>
         </div>
         

@@ -51,7 +51,7 @@ function data1() {
         dataType: 'json',
         success: function(response)
         {
-            console.log("data1: ", response);
+            //console.log("data1: ", response);
             var msg;
             if (!Array.isArray(response)) {
                 msg = response;
@@ -61,6 +61,7 @@ function data1() {
                 $("#chart").text(msg);
             } else {
                 dataP2 = response;
+                //console.log(dataP2);
                 drawData1(dataP2);
                 showP2();
             }
@@ -90,7 +91,8 @@ function data2() {
                 $("#displayGraph").text(msg);
                 $("#chart").text(msg);
             } else {
-                drawData1(response);
+                dataP2 = response;
+                drawData1(dataP2);
                 showP2();
             }
             
@@ -493,10 +495,9 @@ function drawBar() {
 }
 //line
 function drawLine() {
-    var graphD = $('#dataToGraph:checked').val();
+    var gD = $('#dataToGraph:checked').val();
 // console.log(bbData);
     console.log(checkData(dataForGraph));
-
     if (checkData(dataForGraph) === 'true') {
         if (graphD === 'avgDist')  {
             avgLineGraph(dataForGraph);
@@ -567,7 +568,7 @@ function pieGraph(ddata){
     var table = new google.visualization.PieChart(document.getElementById('displayGraph'));
     table.draw(newData, options);
 }
-
+//display table for Data1 and Data2
 function drawData1(d) {
     var d = d;
     var dataVis = new google.visualization.DataTable(d);
@@ -595,10 +596,165 @@ function drawData1(d) {
         //console.log(aw);
         dataVis.addRows([[rn, z, c, s, ep, tw, aw]])
     });
+
+    var avgL = google.visualization.data.group(dataVis, [{
+        column: 0,
+        label: 'Number of Wages',
+        type:'number'  
+    }], [{
+        column: 1,
+        label: 'Average Wages',
+        aggregation: google.visualization.data.avg,
+        type: 'number'
+    }]);
+    
     //console.log(dataVis);
     var table = new google.visualization.Table(document.getElementById('chart'));
     table.draw(dataVis, {showRowNumber: true, width: '100%', height: '100%'});
 }
+//display charts for Data1 or Data2
+function displayCharts(d) {
+    var gD = $('#data2:checked').val();
+    console.log(checkData(dataP2));
+    if (checkData(dataP2) === 'true') {
+        if (gD === 'avg')  {
+            // console.log(dataP2);
+           avgData(dataP2);
+            //$('#messageArea').text("Length of Data: " + `${dataLength}`);
+        } else if (gD == 'est') {
+            // console.log(dataP2);
+            estData(dataP2);
+            // estBar(dataP2);
+            //$('#messageArea').text("Length of Data: " + `${dataLength}`);
+        } else if (gD === 'count') {
+            // console.log(dataP2);
+            cData(dataP2);
+            // cPie(dataP2);
+           // $('#displayGraph').text(notice);
+            //$('#messageArea').text(notice);
+            // } else {
+            //     var notice = "Please choose appropriate graph for data."
+            //     $('#gdisplayGraph').text(notice);
+            //     $('#messageArea').text(notice);
+        }
+    } else {
+        $('#messageArea').text("Please load data.")
+        $('#displayGraph').text("Please load data.")
+    }
+}
+
+function avgData(dP2) {
+    var d = dP2;
+    var data = new google.visualization.DataTable();
+    data.addColumn('string', 'State');
+    data.addColumn('number',  'AvgWages');
+    $.each(d, function(i, d) {
+        var c = d.State;
+        var tw = parseInt(d.TotalWages);
+        data.addRows([[c, tw]]);
+    });
+    var avgD = google.visualization.data.group(data, [{
+        column: 0,
+        label: 'State',
+        type:'string'  
+    }], [{
+        column: 1,
+        label: 'Avg Wages',
+        aggregation: google.visualization.data.avg,
+        type: 'number'
+    }]);
+    var line_options = {
+        width: '1000px',
+        height: 500,
+        hAxis:{
+            textPosition:'out',
+            slantedText: true,
+            slantedTextAngle: -45
+        }
+    };
+    var bar_options = {
+        bars: 'horizontal',
+        height: 500,
+        width: '1000px'
+    }
+    var table = new google.visualization.LineChart(document.getElementById('displayGraph'));
+    table.draw(avgD, line_options);
+    var table = new google.charts.Bar(document.getElementById('dGraph2'));
+    table.draw(avgD, bar_options);
+}
+function estData(dP2) {
+    var d = dP2;
+    var data = new google.visualization.DataTable();
+    data.addColumn('string', 'State');
+    data.addColumn('number',  'EstimatedPopulation');
+    $.each(d, function(i, d) {
+        var c = d.State;
+        var tw = parseInt(d.EstimatedPopulation);
+        data.addRows([[c, tw]]);
+    });
+    var estD = google.visualization.data.group(data, [{
+        column: 0,
+        label: 'State',
+        type:'string'  
+    }], [{
+        column: 1,
+        label: 'Estimated Population',
+        aggregation: google.visualization.data.avg,
+        type: 'number'
+    }]);
+    var line_options = {
+        width: '1000px',
+        height: 500,
+        hAxis:{
+            textPosition:'out',
+            slantedText: true,
+            slantedTextAngle: -45
+        }
+    };
+    var bar_options = {
+        bars: 'horizontal',
+        height: 500,
+        width: '1000px'
+    }
+    var table = new google.visualization.LineChart(document.getElementById('displayGraph'));
+    table.draw(estD, line_options);
+    var table = new google.charts.Bar(document.getElementById('dGraph2'));
+    table.draw(estD, bar_options);
+}
+function cData(dP2) {
+    var d = dP2;
+    var data = new google.visualization.DataTable();
+    data.addColumn('string', 'State');
+    data.addColumn('number',  'RecordNumber');
+    $.each(d, function(i, d) {
+        var c = d.State;
+        var rn = parseInt(d.RecordNumber);
+        data.addRows([[c, rn]]);
+    });
+    var cD = google.visualization.data.group(data, [{
+        column: 0,
+        label: 'State',
+        type:'string'  
+    }], [{
+        column: 1,
+        label: 'Number of Record Numbers',
+        aggregation: google.visualization.data.count,
+        type: 'number'
+    }]);
+    var pie_options = {
+        width: '1000px',
+    };
+    var bar_options = {
+        bars: 'horizontal',
+        height: 500,
+        width: '1000px'
+    }
+    var table = new google.visualization.PieChart(document.getElementById('displayGraph'));
+    table.draw(cD, pie_options);
+    var table = new google.charts.Bar(document.getElementById('dGraph2'));
+    table.draw(cD, bar_options);
+}
+
 
 
 
