@@ -2,6 +2,8 @@ var dataForGraph=null;
 var dataLength;
 var dataP2 = null;
 var uid;
+var avgWage;
+var estPop;
 //console.log(uid);
 $(document).ready(function () {
     window.onload = function() {
@@ -42,7 +44,6 @@ function showP2() {
         p2.style.display = 'none';
     } 
 }
-
 // load DB data1
 function data1() {
     $.ajax({
@@ -64,8 +65,7 @@ function data1() {
                 //console.log(dataP2);
                 drawData1(dataP2);
                 showP2();
-            }
-            
+            }       
         },
         error : function (xmlHttpRequest, textStatus, errorThrown) 
         {
@@ -127,7 +127,6 @@ function fileValidation() {
         parseData();
     }
 };
-
 //PARSE CSV FILE FOR TABLEVIEW
 function parseData() {
     Papa.parse(document.getElementById('csvFile').files[0],
@@ -166,7 +165,6 @@ function parseForGraph(){
 function giveInfo(){
     alert("Kristine Veneles, CPS4745, Project due Oct. 26, 2022");
 }
-
 //CLIENT INFO
 function clientInfo() {
     let c = "";
@@ -186,7 +184,6 @@ function clientInfo() {
     let txt = `${b}`+"\n"+ `${version}` +"\n"+ `${jv}`+"\n"+ `${c}`;
     alert(txt);
 }
-
 //LOGIN FUNCTION
 function connectUser(uid,pw) {
     $.ajax({
@@ -200,7 +197,6 @@ function connectUser(uid,pw) {
             console.log(response);
             var msg = response;
             console.log('hello');
-
             $("#msgForUser").css("display", "block");
             $("#messageArea").text(msg);
             $("#displayGraph").text(msg);
@@ -216,7 +212,6 @@ function connectUser(uid,pw) {
             }
         });
 };
-
 //GET USER INFO
 function userInfo() {
     $.ajax({
@@ -244,13 +239,11 @@ function userInfo() {
         } 
     })
 }
-
 //User Info
 function viewUserInfo(uid, login, name, gender) {
     let info = uid + ", " + login + ", " + name + ", " + gender;
     alert(info);
 }
-
 // LOGOUT FUNCTION
 function logout() {
     $.ajax({
@@ -270,7 +263,6 @@ function logout() {
         }
     })
 }
-
 // EXIT_FUNCTION --DOESNOTWORK
 function closeWindow() {
     if (confirm("Close Window?")) {
@@ -278,7 +270,6 @@ function closeWindow() {
         window.close();
     }
 }
-
 //TABLE
 function drawTable(csvData) {
     var data = new google.visualization.arrayToDataTable(csvData);
@@ -292,7 +283,6 @@ function drawTable(csvData) {
     var table = new google.visualization.Table(document.getElementById('chart'));
     table.draw(data, {showRowNumber: true, width: '100%', height: '100%'});
 }
-
 //check if graphForData is empty
 function checkData(data) {
     return(data ? 'true': 'false');
@@ -323,7 +313,6 @@ function avgLineGraph(ddata) {
         aggregation: google.visualization.data.avg,
         type: 'number'
     }]);
-
     var options = {
         width: '1000px',
         height: 500,
@@ -360,7 +349,6 @@ function estLineGraph(ddata) {
             label: 'Elevation_Angle',
             aggregation: google.visualization.data.avg,
             type: 'number'
-            
         }]
       );
         var options = {
@@ -599,6 +587,7 @@ function drawData1(d) {
     var range = dataVis.getColumnRange(6);
     console.log(range);
     
+    
     var avgL = google.visualization.data.group(dataVis, [{
         column: 0,
         label: 'Number of Wages',
@@ -644,7 +633,7 @@ function displayCharts(d) {
         $('#displayGraph').text("Please load data.")
     }
 }
-
+//display avgData charts
 function avgData(dP2) {
     var d = dP2;
     var data = new google.visualization.DataTable();
@@ -684,6 +673,7 @@ function avgData(dP2) {
     var table = new google.charts.Bar(document.getElementById('dGraph2'));
     table.draw(avgD, bar_options);
 }
+//display estData charts
 function estData(dP2) {
     var d = dP2;
     var data = new google.visualization.DataTable();
@@ -723,6 +713,7 @@ function estData(dP2) {
     var table = new google.charts.Bar(document.getElementById('dGraph2'));
     table.draw(estD, bar_options);
 }
+//display count data charts
 function cData(dP2) {
     var d = dP2;
     var data = new google.visualization.DataTable();

@@ -5,15 +5,17 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <!--modal-->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
     <!--bootstraplayout-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
-
     <!--bootstraplayout -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="style.css"> 
+    <!-- Danfo.js-->
+    <script src="https://cdn.jsdelivr.net/npm/danfojs@1.1.2/lib/bundle.js"></script>
+    <!--plotly libraries-->
+   <script src="https://cdn.plot.ly/plotly-2.14.0.min.js"></script>
     <script type="text/javascript"> 
         // google.charts.load('current', {'packages':['corechart', 'table', 'line', 'bar', 'pie']});
         google.charts.load('current', {'packages':['corechart']});
@@ -26,14 +28,13 @@
     <title>Project 2</title>
 </head>
 <body>
+    <!-- Navigation -->
     <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
         <div class="container">
             <a href="#" class="navbar-brand">Project 2</a>
-
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu">
                 <span class="navbar-toggler-icon"></span>
             </button>
-
             <div class="collapse navbar-collapse" id="navmenu">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item dropdown">
@@ -104,7 +105,7 @@
     <div class="p-5 text-center" id="info">
         Project Information
         <div id="iframe">
-            <iframe src="https://docs.google.com/document/d/e/2PACX-1vSkrqbeAS_Ykho8GRxyEvK4dY_qSXC6EMHuD_BVfiooheG8Ru8yXZ-TEjTVtySotw/pub?embedded=true"  height="500" width="1000" ></iframe>
+            <iframe src="https://docs.google.com/document/d/e/2PACX-1vSkrqbeAS_Ykho8GRxyEvK4dY_qSXC6EMHuD_BVfiooheG8Ru8yXZ-TEjTVtySotw/pub"  height="500" width="1000" ></iframe>
             <button id='exit'>Exit</button>
         </div>
     </div>
@@ -138,6 +139,7 @@
     </div> 
     <!--End of Modal Logout Section-->
 
+    <!-- Message Area and Menu Choice for CSV and Table Area -->
     <section class="p-5 text-center">
         <div class="container text-center" style="display: inline-block">
             <div class="row align-items-start">
@@ -167,24 +169,28 @@
             </div><!--d-flex-->
         </div><!--container-->
     </section>
-        
+     <!-- Menu Choice for Project 2-->  
     <section class="p-3 text-center">
         <div class="container text-center" style="display: none" id="p2">
             <div class="row align-items-start">
                 <div class="row bg-dark text-white p-3" >
-                    <p>Please select one choice and choose a graph in the View Menu for CSV File:</p>
+                    <p>Please select one choice and choose a graph in the View Menu for Project 2:</p>
                         <input type="radio" id="data2" name="dataP2" value="avg" onclick='displayCharts();'/>
                         <label>Average Wages[Bar, Line]</label><br>
                         <input type="radio" id="data2" name="dataP2" value="est" onclick='displayCharts();'/>
                         <label>Estimated Population [Bar, Line]</label><br>
                         <input type="radio" id="data2" name="dataP2" value="count" onclick='displayCharts();'/>
                         <label>State Counts [Bar, Pie]</label>
+                    <p>Average Wages</p>
+                        <input type="range" min="1" max="100" value="50" class="slider" id="avgRange">
+                    <p>Estimated Population</p>
+                        <input type="range" min="1" max="100" value="50" class="slider" id="estRange">   
                 </div>
             </div> 
         </div>
     </section>
-
-    </section class="p-5 text-center">
+    <!-- Graph Area-->
+    <section class="p-5 text-center">
         <div class="container text-center" style="display: block">
             <div class="row align-items-start" id="graphArea">
                 <div class="text-bg-danger p-5 m-2 mt-0">
@@ -197,11 +203,10 @@
                 </div>
                 
             </div>
-        </div>
-        
-    <section>
-    <script src="script.js"></script>
+        </div> 
+    </section>
+    <!-- Papa Parse -->
     <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
-    
+    <script src="script.js"></script>
 </body>
 </html>
