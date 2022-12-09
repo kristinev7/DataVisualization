@@ -23,7 +23,7 @@ if(isset($_POST['uid']) && isset($_POST['pw'])) {
         $userId=mysqli_real_escape_string($mycon, $_POST['uid']);
         $userPw=mysqli_real_escape_string($mycon, $_POST['pw']);
         //CHECKING LOGIN AND PASSWORD
-        $query = "Select login, password from DV_User where login = ? or password = ?";
+        $query = "Select login, password from datamining.DV_User where login = ? and password = ?";
 
         //preparing statement for login
         //initialize connection to db; returns object mysqli stmt
@@ -34,9 +34,11 @@ if(isset($_POST['uid']) && isset($_POST['pw'])) {
             exit();
         } else {
             mysqli_stmt_bind_param($stmt, "ss", $userId, $userPw);
+                //echo $userId;
             mysqli_stmt_execute($stmt);
             mysqli_stmt_bind_result($stmt, $login, $pw);
             mysqli_stmt_fetch($stmt);
+                //echo $login;
                 if (strcmp($userId, $login) != 0) {
                     $msg= "Login " . $userId . " doesn't exist in the database.";
                 } 

@@ -1,9 +1,18 @@
 var dataForGraph=null;
 var dataLength;
 var dataP2 = null;
+var id;
+var login;
 var uid;
-var avgWage;
-var estPop;
+var avgWage;//average of avgwage
+var estPop;//avg of est pop
+var minAvg;
+var maxAvg;
+var minEst;
+var maxEst;
+var avgValue;
+var estValue;
+
 //console.log(uid);
 $(document).ready(function () {
     window.onload = function() {
@@ -17,6 +26,7 @@ $(document).ready(function () {
         e.preventDefault();
         $('.button').modal('hide');
          uid = $('#uid').val();
+        // console.log(uid);
         var pw = $('#pw').val();
         connectUser(uid, pw);   
     });
@@ -28,13 +38,26 @@ $(document).ready(function () {
         hideInfo();
     })
     const p2 = document.getElementById('p2');
-    // document.getElementById('data1').addEventListener('click', () => {
-    //     showP2(); 
-    // })
+    document.getElementById('data1').addEventListener('click', () => {
+        getAvg1();
+    });
+    document.getElementById('d2').addEventListener('click', () => {
+        getAvg2();
+    });
+    document.getElementById('avgRange').addEventListener('click', () => {
+        pullData();
+    });
+    document.getElementById('estRange').addEventListener('click', () => {
+        pullData();
+    });
+    document.getElementById('save').addEventListener('click', () => {
+        saveSetting();
+    })
+    
 })
-//show p2
+//getting data average
+//show p2 menu choice
 function showP2() {
-    console.log(uid);
     if ( uid !== undefined) {
         if (document.getElementById('data1').click) {
             p2.style.display = 'inline-block';
@@ -62,9 +85,43 @@ function data1() {
                 $("#chart").text(msg);
             } else {
                 dataP2 = response;
-                //console.log(dataP2);
+                console.log(dataP2);
                 drawData1(dataP2);
                 showP2();
+                
+            }       
+        },
+        error : function (xmlHttpRequest, textStatus, errorThrown) 
+        {
+            console.log(textStatus);
+            console.log("Error " + errorThrown);
+        } 
+    })
+}
+//getAverages
+function getAvg1() {
+    $.ajax({
+        url: 'getAverages.php',
+        type: 'POST',
+        dataType: 'json',
+        success: function(response)
+        {
+            //console.log("data1: ", response);
+            var msg;
+            if (!Array.isArray(response)) {
+                msg = response;
+                $("#msgForUser").css("display", "block");
+                $("#messageArea").text(msg);
+                $("#displayGraph").text(msg);
+                $("#chart").text(msg);
+            } else {
+                var dv1 = response;
+                console.log(dv1);
+                console.log(dv1[0]['avgW']);
+                console.log(dv1[0]['avgE']);
+                avgWage = dv1[0]['avgW'];
+                estPop = dv1[0]['avgE'];
+                
             }       
         },
         error : function (xmlHttpRequest, textStatus, errorThrown) 
@@ -92,8 +149,10 @@ function data2() {
                 $("#chart").text(msg);
             } else {
                 dataP2 = response;
+                console.log(dataP2);
                 drawData1(dataP2);
                 showP2();
+                
             }
             
         },
@@ -104,6 +163,36 @@ function data2() {
         } 
     })
 }
+//getAvg2
+function getAvg2() {
+    $.ajax({
+        url: 'getAvg2.php',
+        type: 'POST',
+        dataType: 'json',
+        success: function(response)
+        {
+            //console.log("data1: ", response);
+            var msg;
+            if (!Array.isArray(response)) {
+                msg = response;
+                $("#msgForUser").css("display", "block");
+                $("#messageArea").text(msg);
+                $("#displayGraph").text(msg);
+                $("#chart").text(msg);
+            } else {
+                var dv2 = response;
+                avgWage = dv2[0]['avgW'];
+                estPop = dv2[0]['avgE'];
+                console.log(avgWage, estPop);
+            }       
+        },
+        error : function (xmlHttpRequest, textStatus, errorThrown) 
+        {
+            console.log(textStatus);
+            console.log("Error " + errorThrown);
+        } 
+    })
+} 
 //show info in an iframe
 function displayInfo() {
         var iframe = document.getElementById('info');
@@ -221,15 +310,17 @@ function userInfo() {
         success:function(response)
         {
             console.log(response);
-             uid = response[0]['uid'];
-            var login = response[0]['login'];
+             id = response[0]['uid'];
+             login = response[0]['login'];
+             console.log(uid);
+             console.log(login);
             var name = response[0]['name'];
             var gender = response[0]['gender'];
-            if (uid == undefined || login==undefined || name == undefined || gender==undefined) {
+            if (id == undefined || login==undefined || name == undefined || gender==undefined) {
                 var r = response;
                 alert(r);
             } else {
-                viewUserInfo(uid, login, name, gender);
+                viewUserInfo(id, login, name, gender);
             } 
         },
         error : function (xmlHttpRequest, textStatus, errorThrown) 
@@ -584,10 +675,25 @@ function drawData1(d) {
         //console.log(aw);
         dataVis.addRows([[rn, z, c, s, ep, tw, aw]])
     });
-    var range = dataVis.getColumnRange(6);
-    console.log(range);
-    
-    
+    //get min and max of Avg Wages column
+    var avgRange = dataVis.getColumnRange(6);
+    console.log(avgRange);
+    minAvg = avgRange.min;
+    maxAvg = avgRange.max;
+    console.log("minAvg: ", minAvg);
+    console.log("maxAvg: ", maxAvg);
+    document.getElementById("avgRange").min = minAvg; 
+    document.getElementById("avgRange").max = maxAvg; 
+    document.getElementById("avgRange").value = avgWage;
+    var estRange = dataVis.getColumnRange(4);
+    minEst = estRange.min;
+    maxEst = estRange.max;
+    document.getElementById("estRange").min = minEst; 
+    document.getElementById("estRange").max = maxEst; 
+    document.getElementById("estRange").value = estPop; 
+    console.log('avgWage', avgWage);
+    console.log('estPop', estPop);
+
     var avgL = google.visualization.data.group(dataVis, [{
         column: 0,
         label: 'Number of Wages',
@@ -598,10 +704,14 @@ function drawData1(d) {
         aggregation: google.visualization.data.avg,
         type: 'number'
     }]);
-    
-    //console.log(dataVis);
+    console.log(dataVis);
+    //console.log(avgL);
     var table = new google.visualization.Table(document.getElementById('chart'));
-    table.draw(dataVis, {showRowNumber: true, width: '100%', height: '100%'});
+    var formatter = new google.visualization.ColorFormat();
+    formatter.addRange(-2000, 0, 'black', 'red');
+    formatter.addRange(2000, null, 'black', 'green');
+    formatter.format(dataVis, 5);
+    table.draw(dataVis, {allowHTML: true, showRowNumber: true, width: '100%', height: '100%'});
 }
 //display charts for Data1 or Data2
 function displayCharts(d) {
@@ -655,18 +765,18 @@ function avgData(dP2) {
         type: 'number'
     }]);
     var line_options = {
-        width: '1000px',
-        height: 500,
+        width: '100%',
+        height: '100%',
         hAxis:{
             textPosition:'out',
             slantedText: true,
-            slantedTextAngle: -45
+            slantedTextAngle: -90
         }
     };
     var bar_options = {
         bars: 'horizontal',
-        height: 500,
-        width: '1000px'
+        height: '100%',
+        width: '100%'
     }
     var table = new google.visualization.LineChart(document.getElementById('displayGraph'));
     table.draw(avgD, line_options);
@@ -700,7 +810,7 @@ function estData(dP2) {
         hAxis:{
             textPosition:'out',
             slantedText: true,
-            slantedTextAngle: -45
+            slantedTextAngle: -90
         }
     };
     var bar_options = {
@@ -747,7 +857,32 @@ function cData(dP2) {
     var table = new google.charts.Bar(document.getElementById('dGraph2'));
     table.draw(cD, bar_options);
 }
-
+//get updated Slider data
+function pullData() {
+    avgValue= document.getElementById("avgRange").value;
+    estValue = document.getElementById("estRange").value; 
+   document.getElementById("av").innerHTML = avgValue;
+   document.getElementById("ev").innerHTML = estValue;
+}
+function saveSetting() {
+    console.log(login);
+    console.log(uid);
+    // $.ajax({
+    //     url: './saveData.php',
+    //     type: 'POST',
+    //     dataType: 'json',
+    //     success:function(response)
+    //     {
+    //         console.log(response);
+             
+    //     },
+    //     error : function (xmlHttpRequest, textStatus, errorThrown) 
+    //     {
+    //         console.log(textStatus);
+    //         console.log("Error " + errorThrown);
+    //     } 
+    // })
+}
 
 
 
