@@ -50,11 +50,34 @@ function drawTable(d) {
         //console.log(aw);
         dataVis.addRows([[rn, z, c, s, ep, tw, aw]])
     });
-    //console.log(dataVis);
+
+    console.log("dataVis: ", dataVis);
+    var range = dataVis.getColumnRange(6);
+    var max = range.max;
+    console.log(range.max);
+    console.log(range.min);
+    var avg_value=0;
+    // console.log(keys);
+    var rowInds = dataVis.getSortedRows([{column: 6}]);
+        for (var i = 0; i < rowInds.length; i++) {
+            var v = dataVis.getValue(rowInds[i], 6);  
+        }
+        avg_value = max/rowInds.length;
+        console.log(avg_value);
+        const keys = dataVis.getFilteredRows([{column: 6, minValue: avg_value, maxValue: max}]);
+        console.log(keys);
+        //.setProperty('background-color', 'red');
+        // if (v > range.max) {
+        //     console.log("v ", v);
+        //     dataVis.setProperty(i, 6, 'background-color', 'red')
+        // }
+    // console.log(dataVis.getColumnRange(6));
+  
     var options = {
         width: '500px',
         height: '500px'
     };
     var table = new google.visualization.Table(document.getElementById('graphArea'));
+
     table.draw(dataVis, options);
 }

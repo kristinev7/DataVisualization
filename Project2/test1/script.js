@@ -707,10 +707,10 @@ function drawData1(d) {
     console.log(dataVis);
     //console.log(avgL);
     var table = new google.visualization.Table(document.getElementById('chart'));
-    var formatter = new google.visualization.ColorFormat();
-    formatter.addRange(-2000, 0, 'black', 'red');
-    formatter.addRange(2000, null, 'black', 'green');
-    formatter.format(dataVis, 5);
+    // var formatter = new google.visualization.ColorFormat();
+    // formatter.addRange(-2000, 0, 'black', 'red');
+    // formatter.addRange(2000, null, 'black', 'green');
+    // formatter.format(dataVis, 5);
     table.draw(dataVis, {allowHTML: true, showRowNumber: true, width: '100%', height: '100%'});
 }
 //display charts for Data1 or Data2
@@ -861,27 +861,33 @@ function cData(dP2) {
 function pullData() {
     avgValue= document.getElementById("avgRange").value;
     estValue = document.getElementById("estRange").value; 
-   document.getElementById("av").innerHTML = avgValue;
-   document.getElementById("ev").innerHTML = estValue;
+   $("#av").text(avgValue);
+   $("#ev").text(estValue);
 }
 function saveSetting() {
-    console.log(login);
-    console.log(uid);
-    // $.ajax({
-    //     url: './saveData.php',
-    //     type: 'POST',
-    //     dataType: 'json',
-    //     success:function(response)
-    //     {
-    //         console.log(response);
-             
-    //     },
-    //     error : function (xmlHttpRequest, textStatus, errorThrown) 
-    //     {
-    //         console.log(textStatus);
-    //         console.log("Error " + errorThrown);
-    //     } 
-    // })
+    save_avgValue= document.getElementById("avgRange").value;
+    save_estValue = document.getElementById("estRange").value; 
+    console.log(save_avgValue);
+    console.log(save_estValue);
+    if (uid == undefined && login == undefined ) {
+        $('#messageArea').text("Please log in and load data");
+    } else {
+         $.ajax({
+        url: './saveData.php',
+        type: 'POST',
+        data: {save_avgValue:save_avgValue, save_estValue:save_estValue},
+        dataType: 'json',
+        success:function(response)
+        {
+            console.log(response); 
+        },
+            error : function (xmlHttpRequest, textStatus, errorThrown) 
+            {
+                console.log(textStatus);
+                console.log("Error " + errorThrown);
+            } 
+        })
+    }
 }
 
 
