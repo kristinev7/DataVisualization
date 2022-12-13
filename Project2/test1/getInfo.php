@@ -9,6 +9,7 @@ if(!isset($_COOKIE['userId'])) {
 	exit();
 } else {
     include '../../../CPS4745/dbconn.php';
+    //include '../dbconfig.php';
     $data= array();
     $user = $_COOKIE['userId'];
 	$mycon = mysqli_connect($host, $username, $dbpassword, $dbname);

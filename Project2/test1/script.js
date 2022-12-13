@@ -1,9 +1,9 @@
 var dataForGraph=null;
 var dataLength;
 var dataP2 = null;
-var id;
-var login;
-var uid;
+var id; //id number
+var login; //login name
+var uid; //login from login form
 var avgWage;//average of avgwage
 var estPop;//avg of est pop
 var minAvg;
@@ -12,7 +12,10 @@ var minEst;
 var maxEst;
 var avgValue;
 var estValue;
-
+var plot1;
+var plot2;
+var preferences;
+var subject;
 //console.log(uid);
 $(document).ready(function () {
     window.onload = function() {
@@ -53,9 +56,44 @@ $(document).ready(function () {
     document.getElementById('save').addEventListener('click', () => {
         saveSetting();
     })
+    $('#save').click(function(e) {
+        e.preventDefault();
+        saveSetting();
+    })
+    $('#mail').click(function(e) {
+        e.preventDefault();
+        mailTo();
+    })
+    $('#sendMail').click(function(e) {
+        e.preventDefault();
+        sendMail();
+    })
     
 })
-//getting data average
+//send email of preferences
+function sendMail() {
+    let recipient = document.getElementById('Recipient').value;
+    console.log(recipient);
+    console.log(subject);
+    console.log(preferences);
+    $.ajax({
+        url: 'mail.php',
+        type: 'POST',
+        data: {recipient:recipient, subject:subject, preferences},
+        dataType: 'text',
+        success:function(response)
+        {
+            console.log(response);
+        }
+    })
+}
+
+//mail preferences
+function mailTo() {
+    subject = login + "'s Preferences";
+    preferences = estValue + ", " + avgValue + ", " + plot1 + ", " + plot2; 
+    //console.log(preferences);
+}
 //show p2 menu choice
 function showP2() {
     if ( uid !== undefined) {
@@ -85,17 +123,11 @@ function data1() {
                 $("#chart").text(msg);
             } else {
                 dataP2 = response;
-                console.log(dataP2);
+                //console.log(dataP2);
                 drawData1(dataP2);
                 showP2();
-                
             }       
-        },
-        error : function (xmlHttpRequest, textStatus, errorThrown) 
-        {
-            console.log(textStatus);
-            console.log("Error " + errorThrown);
-        } 
+        }
     })
 }
 //getAverages
@@ -116,18 +148,12 @@ function getAvg1() {
                 $("#chart").text(msg);
             } else {
                 var dv1 = response;
-                console.log(dv1);
-                console.log(dv1[0]['avgW']);
-                console.log(dv1[0]['avgE']);
+                // console.log(dv1);
+                // console.log(dv1[0]['avgW']);
+                // console.log(dv1[0]['avgE']);
                 avgWage = dv1[0]['avgW'];
-                estPop = dv1[0]['avgE'];
-                
+                estPop = dv1[0]['avgE'];  
             }       
-        },
-        error : function (xmlHttpRequest, textStatus, errorThrown) 
-        {
-            console.log(textStatus);
-            console.log("Error " + errorThrown);
         } 
     })
 }
@@ -151,15 +177,8 @@ function data2() {
                 dataP2 = response;
                 console.log(dataP2);
                 drawData1(dataP2);
-                showP2();
-                
-            }
-            
-        },
-        error : function (xmlHttpRequest, textStatus, errorThrown) 
-        {
-            console.log(textStatus);
-            console.log("Error " + errorThrown);
+                showP2();               
+            } 
         } 
     })
 }
@@ -185,12 +204,7 @@ function getAvg2() {
                 estPop = dv2[0]['avgE'];
                 console.log(avgWage, estPop);
             }       
-        },
-        error : function (xmlHttpRequest, textStatus, errorThrown) 
-        {
-            console.log(textStatus);
-            console.log("Error " + errorThrown);
-        } 
+        }
     })
 } 
 //show info in an iframe
@@ -283,22 +297,13 @@ function connectUser(uid,pw) {
         async:false,
         success:function(response)
         {
-            console.log(response);
+            //console.log(response);
             var msg = response;
-            console.log('hello');
             $("#msgForUser").css("display", "block");
             $("#messageArea").text(msg);
             $("#displayGraph").text(msg);
             $("#chart").text(msg);
-        },
-            error : function (xmlHttpRequest, textStatus, errorThrown) 
-            {
-                console.log(textStatus);
-                console.log("Error " + errorThrown);
-            }, 
-            fail : function( jqXHR, textStatus ) {
-                alert( "request failed: " + textStatus );
-            }
+        }
         });
 };
 //GET USER INFO
@@ -322,17 +327,14 @@ function userInfo() {
             } else {
                 viewUserInfo(id, login, name, gender);
             } 
-        },
-        error : function (xmlHttpRequest, textStatus, errorThrown) 
-        {
-            console.log(textStatus);
-            console.log("Error " + errorThrown);
-        } 
+        }
     })
 }
 //User Info
 function viewUserInfo(uid, login, name, gender) {
     let info = uid + ", " + login + ", " + name + ", " + gender;
+    console.log('uid: ', id);
+    console.log('login: ', login);
     alert(info);
 }
 // LOGOUT FUNCTION
@@ -349,6 +351,7 @@ function logout() {
             $("#msgForUser").css("display", "block");
             $("#messageArea").text(msg);
             $("#displayGraph").text(msg);
+            $("#dGraph2").text(msg);
             $("#chart").text(msg);
             showP2();
         }
@@ -782,6 +785,8 @@ function avgData(dP2) {
     table.draw(avgD, line_options);
     var table = new google.charts.Bar(document.getElementById('dGraph2'));
     table.draw(avgD, bar_options);
+    plot1='line';
+    plot2='bar';
 }
 //display estData charts
 function estData(dP2) {
@@ -822,6 +827,8 @@ function estData(dP2) {
     table.draw(estD, line_options);
     var table = new google.charts.Bar(document.getElementById('dGraph2'));
     table.draw(estD, bar_options);
+    plot1='line';
+    plot2='bar';
 }
 //display count data charts
 function cData(dP2) {
@@ -856,6 +863,8 @@ function cData(dP2) {
     table.draw(cD, pie_options);
     var table = new google.charts.Bar(document.getElementById('dGraph2'));
     table.draw(cD, bar_options);
+    plot1='pie';
+    plot2='bar';
 }
 //get updated Slider data
 function pullData() {
@@ -865,27 +874,25 @@ function pullData() {
    $("#ev").text(estValue);
 }
 function saveSetting() {
-    save_avgValue= document.getElementById("avgRange").value;
-    save_estValue = document.getElementById("estRange").value; 
-    console.log(save_avgValue);
-    console.log(save_estValue);
-    if (uid == undefined && login == undefined ) {
+    // save_avgValue= document.getElementById("avgRange").value;
+    // save_estValue = document.getElementById("estRange").value; 
+    console.log('avg V: ', avgValue);
+    console.log(' est v: ', estValue);
+    console.log('id: ', id);
+    console.log('login: ', login);
+    if (id == undefined && login == undefined ) {
         $('#messageArea').text("Please log in and load data");
     } else {
          $.ajax({
         url: './saveData.php',
         type: 'POST',
-        data: {save_avgValue:save_avgValue, save_estValue:save_estValue},
+        data: {id:id, login:login, avgValue:avgValue, estValue:estValue},
         dataType: 'json',
         success:function(response)
-        {
-            console.log(response); 
-        },
-            error : function (xmlHttpRequest, textStatus, errorThrown) 
             {
-                console.log(textStatus);
-                console.log("Error " + errorThrown);
-            } 
+                console.log(response);
+                $('#messageArea') .text(response);
+            }
         })
     }
 }

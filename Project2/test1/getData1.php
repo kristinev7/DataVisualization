@@ -8,15 +8,16 @@ if(!isset($_COOKIE['userId'])) {
     // $msg = "success";
     // echo json_encode($msg);
     include '../../../CPS4745/dbconn.php';
+    //include '../dbconfig.php';
     $data= array();
 	$mycon = mysqli_connect($host, $username, $dbpassword, $dbname);
 	if (!$mycon) {
 		die('Connection error: ' . mysqli_connect_errno());
 	}
-    $qry = "select * from vDV_Data1";
+    $qry = "select * from datamining.vDV_Data1";
     $result = mysqli_query($mycon, $qry);
     foreach($result as $row) {
-        $data [] = array (
+        $data[] = array (
             'RecordNumber' => $row['RecordNumber'],
             'Zipcode' => $row['Zipcode'],
             'ZipCodeType' => $row['ZipCodeType'],

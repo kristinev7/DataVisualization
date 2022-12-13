@@ -79,11 +79,12 @@
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Setting
+                            Settings
                         </a>
                         <ul class="dropdown-menu">
                             <li><a type="button" class="dropdown-item" id="userInfo" onclick="userInfo();">User Info</a></li>
-                            <li><a type='button' class='dropdown-item' id='save' onclick='saveSetting();'>Save</a></li>
+                            <li><a type='button' class='dropdown-item' id='save'>Save</a></li>
+                            <li><a type="button" class="dropdown-item" id="mail" data-toggle='modal' data-target='#email'>Send Preferences</a></li> 
                         </ul>
                     </li>
                     
@@ -138,6 +139,24 @@
         </div>  
     </div> 
     <!--End of Modal Logout Section-->
+
+    <!--E-mail Modal Section-->
+    <div class="modal fade" id="email" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Send Preferences</h5>
+                </div>
+                <form>
+                    <input type="text" id="Recipient" placeholder="Recipient">
+                </form>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="sendMail" data-dismiss="modal">Send</button>
+                    <button type="button" class="btn btn-secondary" id="exitMail" data-dismiss="modal">Close</button> 
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Message Area and Menu Choice for CSV and Table Area -->
     <section class="p-5 text-center">

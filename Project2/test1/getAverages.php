@@ -8,6 +8,7 @@ if(!isset($_COOKIE['userId'])) {
     // $msg = "success";
     // echo json_encode($msg);
     include '../../../CPS4745/dbconn.php';
+    //include '../dbconfig.php';
     $data= array();
 	$mycon = mysqli_connect($host, $username, $dbpassword, $dbname);
 	if (!$mycon) {
