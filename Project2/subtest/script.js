@@ -69,7 +69,7 @@ function drawTable(d) {
         //.setProperty('background-color', 'red');
         // if (v > range.max) {
         //     console.log("v ", v);
-        //     dataVis.setProperty(i, 6, 'background-color', 'red')
+        //     dataVis.setRowProperty(i, 6, 'background-color', 'red')
         // }
     // console.log(dataVis.getColumnRange(6));
   

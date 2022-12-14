@@ -302,6 +302,7 @@ function connectUser(uid,pw) {
             $("#msgForUser").css("display", "block");
             $("#messageArea").text(msg);
             $("#displayGraph").text(msg);
+            $("#dGraph2").text(msg);
             $("#chart").text(msg);
         }
         });
@@ -895,6 +896,13 @@ function saveSetting() {
             }
         })
     }
+}
+function newCharts() {
+    df = new dfd.DataFrame(dataP2);
+    console.log(df);
+    df.plot('displayGraph').scatterplot({
+        config: { x: "State", y: "AvgWages"}
+    })
 }
 
 
