@@ -70,19 +70,6 @@ $(document).ready(function () {
     })
     
 })
-//update Wages
-function updateWage() {
-    console.log("min wage: ", minAvg);
-    console.log("current wage: ", avgValue);//current wage value
-
-}
-//update Estimated Population
-function updatePop() {
-    console.log("min pop: ", minEst);
-    console.log("current pop value: ", estValue);
-}
-
-
 //send email of preferences
 function sendMail() {
     let recipient = document.getElementById('Recipient').value;
@@ -97,6 +84,9 @@ function sendMail() {
         success:function(response)
         {
             console.log(response);
+						if ( response === 'true' ){
+							$("#messageArea").text("Mail Sent");
+						}
         }
     })
 }
@@ -315,7 +305,7 @@ function connectUser(uid,pw) {
             $("#msgForUser").css("display", "block");
             $("#messageArea").text(msg);
             $("#displayGraph").text(msg);
-            $("#dGraph2").text(msg);
+						$("#dGraph2").text(msg);
             $("#chart").text(msg);
         }
         });
@@ -911,32 +901,18 @@ function saveSetting() {
     }
 }
 function newCharts() {
-    df = new dfd.DataFrame(dataP2);
-    console.log(df);
-    df.plot('displayGraph').scatterplot({
-        config: { x: "State", y: "AvgWages"}
-    })
-}
+	$("#displayGraph").empty();
+	$("#dGraph2").empty();	
+	df = new dfd.DataFrame(dataP2);
+	let sub_df = df.loc({columns:["State", "AvgWages"]});
+	let df2 = sub_df.groupby(["State"]);
+	let df3 = df2.col(["AvgWages"]).mean().plot(displayGraph).scatter({config: {x:"State", y:"AvgWages_mean"}});
+   let est_df = df.groupby(["State"]).col(["EstimatedPopulation"]).mean();
+	est_df["EstimatedPopulation_mean"].plot(dGraph2).box();
 
-function newCharts() {
-       $("#displayGraph").empty();
-       $("#dGraph2").empty();
-       df = new DataFrame(dataP2);
-       let sub_df = df.loc({columns: ["State", "AvgWages"]});
-       let df2 = sub_df.groupby(["State"]);
-       let df3 = df2.col(["AvgWages"]).sum();
-     }
-    //  var layout = {
-    //     yaxis: {
-    //       title: 'Average Wages'
-    //     }
-    //   }
-    //   var config = {
-    //     columns: ["State", "AvgWages"],
-    //       displayModeBar: true, layout
-    //   }
-    //   df.plot(displayGraph).box(config);
-    //   df.plot(dGraph2).scatter(config);
+	plot1="scatterplot";
+	plot2="boxplot";
+}
 
 
 
