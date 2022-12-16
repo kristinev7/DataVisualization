@@ -19,7 +19,7 @@ if(!isset($_COOKIE['userId'])) {
         $estV = $_POST['estValue'];
         //$msg = $avgV + $estV;
         //echo json_encode($msg);
-        $sql = "select * from vDV_Data1 where AvgWages like '%{$avgV}%' or EstimatedPopulation like '%{$estV}%'";
+        $sql = "select * from vDV_Data1 where TotalWages between ;
         $result = mysqli_query($mycon, $sql);
         foreach($result as $row) {
             $data [] = array (

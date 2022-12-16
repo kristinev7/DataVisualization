@@ -70,6 +70,19 @@ $(document).ready(function () {
     })
     
 })
+//update Wages
+function updateWage() {
+    console.log("min wage: ", minAvg);
+    console.log("current wage: ", avgValue);//current wage value
+
+}
+//update Estimated Population
+function updatePop() {
+    console.log("min pop: ", minEst);
+    console.log("current pop value: ", estValue);
+}
+
+
 //send email of preferences
 function sendMail() {
     let recipient = document.getElementById('Recipient').value;
