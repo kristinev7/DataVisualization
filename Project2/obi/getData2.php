@@ -14,7 +14,7 @@ if(!isset($_COOKIE['userId'])) {
 	if (!$mycon) {
 		die('Connection error: ' . mysqli_connect_errno());
 	}
-    $qry = "select * from vDV_Data2";
+    $qry = "select * from datamining.vDV_Data2";
     $result = mysqli_query($mycon, $qry);
     foreach($result as $row) {
         $data [] = array (

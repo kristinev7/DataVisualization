@@ -202,10 +202,10 @@
                         <label>State Counts [Bar, Pie]</label>
                         <hr>
                     <p>Average Wages</p>
-                        <input type="range" min="0" max="100" value="50" class="slider" id="avgRange" style="width:25%" onchange="pullData()"> 
+                        <input type="range" min="0" max="100" value="50" class="slider" id="avgRange" style="width:25%" onchange="pullData(); updateData();"> 
                         <p>Value:<span id='av'></span></p>
                     <p>Estimated Population</p>
-                        <input type="range" min="0" max="100" value="50" class="slider" id="estRange" style="width:25%"onchange="pullData()">
+                        <input type="range" min="0" max="100" value="50" class="slider" id="estRange" style="width:25%"onchange="pullData(); updateData()">
                         <p>Value:<span id='ev'></span></p>   
                 </div>
             </div> 

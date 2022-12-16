@@ -4,14 +4,14 @@ var dataP2 = null;
 var id; //id number
 var login; //login name
 var uid; //login from login form
-var avgWage;//average of avgwage
-var estPop;//avg of est pop
-var minAvg;
-var maxAvg;
-var minEst;
-var maxEst;
-var avgValue;
-var estValue;
+var avgWage;//average of avgwage from db
+var estPop;//avg of est pop from db
+var minAvg;//should get from db
+var maxAvg;//should get from db
+var minEst;//should get from db
+var maxEst;//should get from db
+var avgValue;//current avg wage from slider
+var estValue;//current populaton from slider
 var plot1;
 var plot2;
 var preferences;
@@ -41,20 +41,21 @@ $(document).ready(function () {
         hideInfo();
     })
     const p2 = document.getElementById('p2');
-    document.getElementById('data1').addEventListener('click', () => {
-        getAvg1();
+    document.getElementById('data1').addEventListener('click', (e) => {
+        e.preventDefault();
+        getAvg1();//getting min/maxwage,min/maxpop,avgwage/pop
     });
     document.getElementById('d2').addEventListener('click', () => {
-        getAvg2();
+        getAvg2();//getting min/maxwage,min/maxpop,avgwage/pop
     });
     document.getElementById('avgRange').addEventListener('click', () => {
-        pullData();
+        pullData();//to get current value to updatecharts
     });
     document.getElementById('estRange').addEventListener('click', () => {
-        pullData();
+        pullData();//get current value to update charts
     });
     document.getElementById('save').addEventListener('click', () => {
-        saveSetting();
+        saveSetting();//save to database
     })
     $('#save').click(function(e) {
         e.preventDefault();
@@ -70,6 +71,21 @@ $(document).ready(function () {
     })
     
 })
+//update and fetch Wage and Population data
+function updateData() {
+    $.ajax({
+        url: 'fetchData.php', 
+        type: 'POST',
+        data: {minAvg:minAvg, avgValue:avgValue, minEst:minEst, estValue:estValue},
+        dataType: 'json',
+        success: function(response)
+        {
+            console.log(response);
+        }
+
+    })
+
+}
 //send email of preferences
 function sendMail() {
     let recipient = document.getElementById('Recipient').value;
@@ -90,7 +106,6 @@ function sendMail() {
         }
     })
 }
-
 //mail preferences
 function mailTo() {
     subject = login + "'s Preferences";
@@ -107,6 +122,7 @@ function showP2() {
      {
         p2.style.display = 'none';
     } 
+    // getAvg1();
 }
 // load DB data1
 function data1() {
@@ -128,7 +144,7 @@ function data1() {
                 dataP2 = response;
                 //console.log(dataP2);
                 drawData1(dataP2);
-                showP2();
+                showP2();//showsmenuforcharts
             }       
         }
     })
@@ -151,11 +167,17 @@ function getAvg1() {
                 $("#chart").text(msg);
             } else {
                 var dv1 = response;
-                // console.log(dv1);
-                // console.log(dv1[0]['avgW']);
-                // console.log(dv1[0]['avgE']);
                 avgWage = dv1[0]['avgW'];
-                estPop = dv1[0]['avgE'];  
+                estPop = dv1[0]['avgE'];
+                minAvg = dv1[0]['minW'];
+                maxAvg = dv1[0]['maxW'];
+                minEst = dv1[0]['minP'];
+                maxEst = dv1[0]['maxP'];
+                //send information to slider
+                document.getElementById("avgRange").min = minAvg;
+                document.getElementById("avgRange").max = maxAvg;
+                document.getElementById("estRange").min = minEst; 
+                document.getElementById("estRange").max = maxEst;
             }       
         } 
     })
@@ -185,7 +207,7 @@ function data2() {
         } 
     })
 }
-//getAvg2
+//getAvg2 for vDV_Data2
 function getAvg2() {
     $.ajax({
         url: 'getAvg2.php',
@@ -205,7 +227,15 @@ function getAvg2() {
                 var dv2 = response;
                 avgWage = dv2[0]['avgW'];
                 estPop = dv2[0]['avgE'];
-                console.log(avgWage, estPop);
+                minAvg = dv2[0]['minW'];
+                maxAvg = dv2[0]['maxW'];
+                minEst = dv2[0]['minP'];
+                maxEst = dv2[0]['maxP'];
+                //send information to slider
+                document.getElementById("avgRange").min = minAvg;
+                document.getElementById("avgRange").max = maxAvg;
+                document.getElementById("estRange").min = minEst; 
+                document.getElementById("estRange").max = maxEst
             }       
         }
     })
@@ -305,8 +335,9 @@ function connectUser(uid,pw) {
             $("#msgForUser").css("display", "block");
             $("#messageArea").text(msg);
             $("#displayGraph").text(msg);
-						$("#dGraph2").text(msg);
+			$("#dGraph2").text(msg);
             $("#chart").text(msg);
+            userInfo();
         }
         });
 };
@@ -667,40 +698,15 @@ function drawData1(d) {
     dataVis.addColumn('number', 'AvgWages');
     $.each(d, function(i, d) {
         var rn = parseInt(d.RecordNumber);
-        //console.log(rn);
         var z = parseInt(d.Zipcode);
-        //console.log(z);
         var c = d.City;
-        //console.log(c);
         var s = d.State;
-        //console.log(s);
         var ep = parseInt(d.EstimatedPopulation);
-        //console.log(ep);
         var tw = parseFloat(d.TotalWages);
-        //console.log(tw);
         var aw = parseFloat(d.AvgWages);
-        //console.log(aw);
         dataVis.addRows([[rn, z, c, s, ep, tw, aw]])
     });
-    //get min and max of Avg Wages column
-    var avgRange = dataVis.getColumnRange(6);
-    console.log(avgRange);
-    minAvg = avgRange.min;
-    maxAvg = avgRange.max;
-    console.log("minAvg: ", minAvg);
-    console.log("maxAvg: ", maxAvg);
-    document.getElementById("avgRange").min = minAvg; 
-    document.getElementById("avgRange").max = maxAvg; 
-    document.getElementById("avgRange").value = avgWage;
-    var estRange = dataVis.getColumnRange(4);
-    minEst = estRange.min;
-    maxEst = estRange.max;
-    document.getElementById("estRange").min = minEst; 
-    document.getElementById("estRange").max = maxEst; 
-    document.getElementById("estRange").value = estPop; 
-    console.log('avgWage', avgWage);
-    console.log('estPop', estPop);
-
+    
     var avgL = google.visualization.data.group(dataVis, [{
         column: 0,
         label: 'Number of Wages',
