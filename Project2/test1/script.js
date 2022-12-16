@@ -897,7 +897,25 @@ function saveSetting() {
     }
 }
 
-
+function newCharts() {
+       $("#displayGraph").empty();
+       $("#dGraph2").empty();
+       df = new DataFrame(dataP2);
+       let sub_df = df.loc({columns: ["State", "AvgWages"]});
+       let df2 = sub_df.groupby(["State"]);
+       let df3 = df2.col(["AvgWages"]).sum();
+     }
+    //  var layout = {
+    //     yaxis: {
+    //       title: 'Average Wages'
+    //     }
+    //   }
+    //   var config = {
+    //     columns: ["State", "AvgWages"],
+    //       displayModeBar: true, layout
+    //   }
+    //   df.plot(displayGraph).box(config);
+    //   df.plot(dGraph2).scatter(config);
 
 
 
