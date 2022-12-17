@@ -12,10 +12,10 @@ var minEst;//should get from db
 var maxEst;//should get from db
 var avgValue;//current avg wage from slider
 var estValue;//current populaton from slider
-var plot1;
-var plot2;
-var preferences;
-var subject;
+var plot1;//user's chart 1 pref
+var plot2;//user's chart 2 pref
+var preferences;//user's preferences
+var subject;//subject to email
 //console.log(uid);
 $(document).ready(function () {
     window.onload = function() {
@@ -81,6 +81,20 @@ function updateData() {
         success: function(response)
         {
             console.log(response);
+            var msg;
+            if (!Array.isArray(response)) {
+                msg = response;
+                $("#msgForUser").css("display", "block");
+                $("#messageArea").text(msg);
+                $("#displayGraph").text(msg);
+                $("#chart").text(msg);
+            } else {
+                dataP2 = response;
+                console.log(dataP2);
+                drawData1(dataP2);
+                showP2();               
+            } 
+            
         }
 
     })
