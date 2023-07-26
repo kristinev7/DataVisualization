@@ -14,10 +14,10 @@ Reading data from MySQL database, which requires user log in to the database to 
 Additional data visualizations graphs are given such as a scatterbox plot.
 In both project, under the Help tab Project Information is provided for a glimpse of the expected outputs and directions.
 ***
-## Study 2 Quarterback Stats 2020
+## Study 1 Quarterback Stats 2020
 Data is based on NFL data from the year 2020. It is read from the database to plot data on specific throws based on the quarterback that is chosen.
 Throw information: completion, touchdown, incomplete
 Quarterbacks: Tom Brady, Patrick Mahomes, Josh Allen, etc.
 ***
-## Study 3 State Wages and Population Stats
+## Study 2 State Wages and Population Stats
 Treemap of Total Wages or Population of all states
