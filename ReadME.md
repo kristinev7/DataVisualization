@@ -8,16 +8,16 @@ Data visualizations will be shown based on the choices provided:
     Data Info: Average Distance,  Estimated Exit Velocity and Parks With Most Home Runs
     Graph: Bar, Line, Pie
 ***
-## Project 2 
+## Project 2 NJ Wages and Population Stats
 Additional functionalities are added to Project 1. 
 Reading data from MySQL database, which requires user log in to the database to process and visualize data based on options provided.
 Additional data visualizations graphs are given such as a scatterbox plot.
 In both project, under the Help tab Project Information is provided for a glimpse of the expected outputs and directions.
 ***
-## Study 2
+## Study 2 Quarterback Stats 2020
 Data is based on NFL data from the year 2020. It is read from the database to plot data on specific throws based on the quarterback that is chosen.
 Throw information: completion, touchdown, incomplete
 Quarterbacks: Tom Brady, Patrick Mahomes, Josh Allen, etc.
 ***
-## Study 3
-Treemap of Total Wages or Population
+## Study 3 State Wages and Population Stats
+Treemap of Total Wages or Population of all states
