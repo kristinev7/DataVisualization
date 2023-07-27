@@ -1,10 +1,10 @@
 <?php
-    include '../../../CPS4745/dbconfig.php';
+    include '../../dbconfig.php';
     $mycon = mysqli_connect($host, $username, $dbpassword, $dbname);
     if (!$mycon) {
         die('Connection error: ' . mysqli_connect_errno());
     } else {
-        echo "success\n";
+        //echo "success\n";
         $sql = "Select distinct(week) from tb20 order by week asc";
         $result = mysqli_query($mycon,$sql);
     }
@@ -13,6 +13,7 @@
 <html>
     <head>
         <title>Pass Stats</title>
+        <h1 align="center">Tom Brady Stats</h1>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -52,10 +53,10 @@
                     </div>
                 </div>
             </div>
-        </div><!--container-->
-        <div class = "chart_area">
-            <div id="chart" style="width: 1000px; height: 620px;"></div>
+            <div class = "chart_area">
+            <div id="chart" style="width: 1000px; height: 620px; position:absolute;"></div>
         </div>
+        </div><!--container-->   
     </body>
 </html>
 
