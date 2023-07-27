@@ -1,6 +1,5 @@
 # Data Visualization Projects
-### Projects were developed using HTML, Bootstrap, Javascript, Google Charts, jQuery, PHP, SQL.
-### There are sources that I used during my learning process of data visualization below.
+### Projects were developed using HTML, Bootstrap, Javascript, Google Charts, jQuery, PHP, SQL. There are sources that I used during my learning process of data visualization below.
 
 ## Project 1 Baseball Stats
 The dataset is on homeruns in the year 2017. There are 13 attributes with 6093 records. Batters from teams of the National League East Division: Atlanta Braves, New York Mets, Philadelphia Phillies, Miami, Marlins, and Washington Nationals and the New York Yankees from the American League East Division.
