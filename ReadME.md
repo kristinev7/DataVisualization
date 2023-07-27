@@ -19,7 +19,8 @@ In both project, under the Help tab Project Information is provided for a glimps
 ## Study 1 Quarterback Stats 2020
 Data is based on NFL data from the year 2020. It is read from the database to plot data on specific throws based on the quarterback that is chosen.
 Throw information: completion, touchdown, incomplete
-Quarterbacks: Tom Brady, Patrick Mahomes, Josh Allen, etc.
+Quarterback: Tom Brady
+![Brady](./img/brady.png)
 ***
 ## Study 2 State Wages and Population Stats
 Treemap of Total Wages or Population of all states.

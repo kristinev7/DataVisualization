@@ -52,8 +52,7 @@
                         <button type="button" name="search" id="search">Search</button>
                     </div>
                 </div>
-            </div><!-- endofdivclassrow -->
-            <br/>
+            </div><!-- endofdivclassrow --><br/>
             <div class="table-responsive" id="qbdetails" style="display:none">
                 <table class="table table-bordered">
                     <tr>
@@ -70,10 +69,11 @@
                     </tr>
                 </table>
             </div><!--endoftable-->
+            <div class = "chart_area">
+                <div id="chart" style="width: 1000px; height: 620px; position:relative;"></div>
+            </div><!--endofchartarea-->
         </div><!--container-->
-        <div class = "chart_area">
-            <div id="chart" style="width: 1000px; height: 620px;"></div>
-        </div>
+        
     </body>
 </html>
 

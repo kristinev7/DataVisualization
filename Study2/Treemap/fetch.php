@@ -1,7 +1,6 @@
 <?php
     if(isset($_GET['data'])) {
-		include '../../../CPS4745/dbconfig.php'; #connection to laptop localhost
-        #include '../../../CPS4745/desktopConn.php'; #connection to desktoplocalhost
+		include '../../dbconfig.php';      
         $pop = $_GET['data'];
         $data = array();
         $mycon = mysqli_connect($host, $username, $dbpassword, $dbname);
@@ -9,7 +8,7 @@
 		    die('Connection error: ' . mysqli_connect_errno());
 	    } else {
             if ($pop == "Estimated Population") {
-                $query = "Select State, City, Zipcode, EstimatedPopulation from test.data1";
+                $query = "Select State, City, Zipcode, EstimatedPopulation from datamining.data1";
                 $result = mysqli_query($mycon, $query);
                 foreach($result as $row) {
                     $data[] = array (
@@ -23,7 +22,7 @@
                 echo json_encode($data);
             }//endofif
                 else if ($pop == "Total Wages") {
-                    $query2 = "Select State, City, Zipcode, TotalWages from test.data1";
+                    $query2 = "Select State, City, Zipcode, TotalWages from datamining.data1";
                     $wageResult = mysqli_query($mycon, $query2);
                     foreach($wageResult as $row) {
                         $data[] = array (
