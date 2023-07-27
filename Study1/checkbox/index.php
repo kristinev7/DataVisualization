@@ -56,16 +56,16 @@
             <div class="table-responsive" id="qbdetails" style="display:none">
                 <table class="table table-bordered">
                     <tr>
-                        <td width="10%" align="right">Opposing Team</td>
-                        <td width="90%"><span id="opp_team"></span></td>
+                        <td width="50%" align="center" style="font-weight:bold;">Opposing Team</td>
+                        <td width="50%" align="center" style="font-weight:bold;"><span id="opp_team"></span></td>
                     </tr>
                     <tr>
-                        <td width="10%" align="right">Season</td>
-                        <td width="90"><span id="season"></span></td>
+                        <td width="50%" align="center" style="font-weight:bold;">Season</td>
+                        <td width="50%" align="center" style="font-weight:bold;"><span id="season"></span></td>
                     </tr>
                     <tr>
-                        <td width="10%" align="right">Game Result</td>
-                        <td width="90"><span id="result"></span></td>
+                        <td width="50%" align="center" style="font-weight:bold;">Game Result</td>
+                        <td width="50%" align="center" style="font-weight:bold;"><span id="result"></span></td>
                     </tr>
                 </table>
             </div><!--endoftable-->
