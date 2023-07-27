@@ -21,3 +21,4 @@ Quarterbacks: Tom Brady, Patrick Mahomes, Josh Allen, etc.
 ***
 ## Study 2 State Wages and Population Stats
 Treemap of Total Wages or Population of all states
+![Treemap](./img/treemap.png)
