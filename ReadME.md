@@ -1,8 +1,10 @@
 # Data Visualization Projects
-### Projects were developed using HTML, Bootstrap, Javascript, Google Charts, jQuery, PHP, SQL. There are sources that I used during my learning process of data visualization below.
+### Projects were developed using HTML, Bootstrap, Javascript, Google Charts, jQuery, PHP, MySQL database. Data files that were used are in the folder data. There are sources that I used during my learning process of data visualization below.
 
 ## Project 1 Baseball Stats
 The dataset is on homeruns in the year 2017. There are 13 attributes with 6093 records. Batters from teams of the National League East Division: Atlanta Braves, New York Mets, Philadelphia Phillies, Miami, Marlins, and Washington Nationals and the New York Yankees from the American League East Division.
+
+This data visualizations conveys the important factors such as how the exit velocity of a ball can affect the distance the ball travels leading to a home run. As well as which baseball parks these homeruns occur the most in.
 
 The provided homeruns2017.csv dataset can be loaded under the File tab using Load CSV function.
 Data visualizations will be shown based on the choices provided:
@@ -17,7 +19,8 @@ Additional data visualizations graphs are given such as a scatterbox plot.
 In both project, under the Help tab Project Information is provided for a glimpse of the expected outputs and directions.
 ***
 ## Study 1 Quarterback Stats 2020
-Data is based on NFL data from the year 2020. It is read from the database to plot data on specific throws based on the quarterback that is chosen.
+Data is based on NFL data from the year 2020. It is read from the database to plot data on specific throws based on the quarterback that is chosen. There is a checkbox version, which allows you to choose 2 or more different throws to see. There is a radio version that allows you to choose only one type of throw.
+
 Throw information: completion, touchdown, incomplete
 Quarterback: Tom Brady
 ![Brady](./img/brady.png)
