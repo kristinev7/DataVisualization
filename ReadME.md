@@ -11,6 +11,7 @@ Data visualizations will be shown based on the choices provided:
     Table Area: Data provided in a table
     Data Info: Average Distance,  Estimated Exit Velocity and Parks With Most Home Runs
     Graph: Bar, Line, Pie
+![Exit Velocity - Distance](./img/proj1.png)
 ***
 ## Project 2 NJ Wages and Population Stats
 Additional functionalities are added to Project 1. 

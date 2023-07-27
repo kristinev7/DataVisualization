@@ -8,7 +8,7 @@ if(!isset($_COOKIE['userId'])) {
     echo json_encode($msg);
 	exit();
 } else {
-    include '../../../CPS4745/dbconn.php';
+    include '../../CPS4745/dbconfig.php';
     $data= array();
     $user = $_COOKIE['userId'];
 	$mycon = mysqli_connect($host, $username, $dbpassword, $dbname);
@@ -16,7 +16,7 @@ if(!isset($_COOKIE['userId'])) {
 		die('Connection error: ' . mysqli_connect_errno());
 	}
     //GET USERINFO
-        $qry = "select uid, login, name, gender from DV_User where login='$user'";
+        $qry = "select uid, login, name, gender from dv_user where login='$user'";
             $result = mysqli_query($mycon, $qry);
             foreach($result as $row) 
             {
